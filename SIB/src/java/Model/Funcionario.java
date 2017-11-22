@@ -6,15 +6,13 @@
 package Model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -40,6 +38,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Funcionario.findBySenha", query = "SELECT f FROM Funcionario f WHERE f.senha = :senha")})
 public class Funcionario implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "cpf")
+    private String cpf;
+    @Column(name = "telefone")
+    private String telefone;
+    @Column(name = "tipo")
+    private Integer tipo;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -49,26 +55,14 @@ public class Funcionario implements Serializable {
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-    @Column(name = "cpf")
-    private String cpf;
-    @Basic(optional = false)
     @Column(name = "endereco")
     private String endereco;
-    @Column(name = "telefone")
-    private String telefone;
     @Basic(optional = false)
     @Column(name = "cargaHorario")
     private int cargaHorario;
     @Basic(optional = false)
     @Column(name = "senha")
     private String senha;
-    @JoinTable(name = "login", joinColumns = {
-        @JoinColumn(name = "idfuncionario", referencedColumnName = "idfuncionario")}, inverseJoinColumns = {
-        @JoinColumn(name = "senha", referencedColumnName = "idfuncionario")})
-    @ManyToMany
-    private Collection<Funcionario> funcionarioCollection;
-    @ManyToMany(mappedBy = "funcionarioCollection")
-    private Collection<Funcionario> funcionarioCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
     private Collection<Emprestimo> emprestimoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
@@ -81,13 +75,15 @@ public class Funcionario implements Serializable {
         this.idfuncionario = idfuncionario;
     }
 
-    public Funcionario(Integer idfuncionario, String nome, String cpf, String endereco, int cargaHorario, String senha) {
+    public Funcionario(Integer idfuncionario, String nome, String cpf, String endereco, int cargaHorario, String telefone, String senha, int tipo) {
         this.idfuncionario = idfuncionario;
         this.nome = nome;
         this.cpf = cpf;
         this.endereco = endereco;
         this.cargaHorario = cargaHorario;
         this.senha = senha;
+        this.telefone = telefone;
+        this.tipo = tipo;
     }
 
     public Integer getIdfuncionario() {
@@ -106,13 +102,6 @@ public class Funcionario implements Serializable {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
     public String getEndereco() {
         return endereco;
@@ -122,13 +111,6 @@ public class Funcionario implements Serializable {
         this.endereco = endereco;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
 
     public int getCargaHorario() {
         return cargaHorario;
@@ -144,24 +126,6 @@ public class Funcionario implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    @XmlTransient
-    public Collection<Funcionario> getFuncionarioCollection() {
-        return funcionarioCollection;
-    }
-
-    public void setFuncionarioCollection(Collection<Funcionario> funcionarioCollection) {
-        this.funcionarioCollection = funcionarioCollection;
-    }
-
-    @XmlTransient
-    public Collection<Funcionario> getFuncionarioCollection1() {
-        return funcionarioCollection1;
-    }
-
-    public void setFuncionarioCollection1(Collection<Funcionario> funcionarioCollection1) {
-        this.funcionarioCollection1 = funcionarioCollection1;
     }
 
     @XmlTransient
@@ -205,6 +169,30 @@ public class Funcionario implements Serializable {
     @Override
     public String toString() {
         return "Model.Funcionario[ idfuncionario=" + idfuncionario + " ]";
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
     
 }

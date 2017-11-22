@@ -23,11 +23,10 @@
         </jsp:declaration>
 
         <jsp:scriptlet>
-            String cpfmascara = request.getParameter("cpf"); 
-            cpfmascara = cpfmascara.replaceAll("[.-]", ""); 
-            long cpf = Long.parseLong(cpfmascara); 
-            String senhauser = request.getParameter("senha"); 
-            String consulta = "SELECT * FROM Login where cpf ='"+cpf+"' and senha='"+senhauser+"'";
+            String usuario = request.getParameter("idFuncionario");            
+            int intUsuario = Integer.parseInt(usuario); 
+            String senha = request.getParameter("senha"); 
+            String consulta = "SELECT * FROM funcionario where idfuncionario ='"+intUsuario+"' and senha='"+senha+"'";
             Statement statetment; 
             try { 
                 statetment = conexao.createStatement(); 

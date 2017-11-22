@@ -26,8 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Exemplar.findAll", query = "SELECT e FROM Exemplar e")
-    , @NamedQuery(name = "Exemplar.findByIdexemplar", query = "SELECT e FROM Exemplar e WHERE e.idexemplar = :idexemplar")
-    , @NamedQuery(name = "Exemplar.findByQuantidade", query = "SELECT e FROM Exemplar e WHERE e.quantidade = :quantidade")})
+    , @NamedQuery(name = "Exemplar.findByIdexemplar", query = "SELECT e FROM Exemplar e WHERE e.idexemplar = :idexemplar")})
 public class Exemplar implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,9 +34,6 @@ public class Exemplar implements Serializable {
     @Basic(optional = false)
     @Column(name = "idexemplar")
     private Integer idexemplar;
-    @Basic(optional = false)
-    @Column(name = "quantidade")
-    private int quantidade;
     @JoinColumn(name = "livro", referencedColumnName = "idlivro")
     @ManyToOne(optional = false)
     private Livro livro;
@@ -49,25 +45,12 @@ public class Exemplar implements Serializable {
         this.idexemplar = idexemplar;
     }
 
-    public Exemplar(Integer idexemplar, int quantidade) {
-        this.idexemplar = idexemplar;
-        this.quantidade = quantidade;
-    }
-
     public Integer getIdexemplar() {
         return idexemplar;
     }
 
     public void setIdexemplar(Integer idexemplar) {
         this.idexemplar = idexemplar;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
     }
 
     public Livro getLivro() {

@@ -28,9 +28,10 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <div class="col-md-12  btn-group btn-group-lg btn-group-vertical">
-                            <a href="#" class="btn btn-default">CLIENTES</a>
-                            <a href="cursos/index.jsp" class="btn btn-default">CURSOS</a>
-                            <a href="pagamentos/index.jsp" class="btn btn-default">PAGAMENTOS</a>
+                            <a href="clientes/index.jsp" class="btn btn-default">CLIENTES</a>
+                            <a href="livros/index.jsp" class="btn btn-default">LIVROS</a>
+                            <a href="emprestimos/index.jsp" class="btn btn-default">EMPRÉSTIMOS E RESERVAS</a>
+                            <a href="funcionarios/index.jsp" class="btn btn-default">FUNCIONÁRIOS</a>
                         </div>
                     </div>
                 </div>
@@ -40,7 +41,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <a class="btn btn-default" href="http://localhost/ProjetoWEB/View/logout.jsp">Sair</a>
+                        <a class="btn btn-default" href="http://localhost/SIB/View/logout.jsp">Sair</a>
                     </div>
                 </div>
             </div>
@@ -54,8 +55,6 @@
                 </div>
             </div>
         </footer>
-
-
     </body>
 
     </html>

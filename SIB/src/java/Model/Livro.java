@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Livro.findByEdi\u00e7\u00e3o", query = "SELECT l FROM Livro l WHERE l.edi\u00e7\u00e3o = :edi\u00e7\u00e3o")
     , @NamedQuery(name = "Livro.findByAno", query = "SELECT l FROM Livro l WHERE l.ano = :ano")
     , @NamedQuery(name = "Livro.findByAutor", query = "SELECT l FROM Livro l WHERE l.autor = :autor")
-    , @NamedQuery(name = "Livro.findBySecao", query = "SELECT l FROM Livro l WHERE l.secao = :secao")})
+    , @NamedQuery(name = "Livro.findBySecao", query = "SELECT l FROM Livro l WHERE l.secao = :secao")
+    , @NamedQuery(name = "Livro.findByQuantidade", query = "SELECT l FROM Livro l WHERE l.quantidade = :quantidade")})
 public class Livro implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,6 +65,8 @@ public class Livro implements Serializable {
     @Basic(optional = false)
     @Column(name = "secao")
     private String secao;
+    @Column(name = "quantidade")
+    private Integer quantidade;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "livro")
     private Collection<Exemplar> exemplarCollection;
 
@@ -147,6 +150,14 @@ public class Livro implements Serializable {
 
     public void setSecao(String secao) {
         this.secao = secao;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 
     @XmlTransient

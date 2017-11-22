@@ -36,6 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Cliente.findByPendencia", query = "SELECT c FROM Cliente c WHERE c.pendencia = :pendencia")})
 public class Cliente implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "cpf")
+    private String cpf;
+    @Basic(optional = false)
+    @Column(name = "telefone")
+    private String telefone;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -45,16 +51,11 @@ public class Cliente implements Serializable {
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
-    @Column(name = "cpf")
-    private String cpf;
     @Column(name = "endereco")
     private String endereco;
     @Basic(optional = false)
-    @Column(name = "telefone")
-    private String telefone;
-    @Basic(optional = false)
     @Column(name = "pendencia")
-    private int pendencia;
+    private String pendencia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Emprestimo> emprestimoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
@@ -69,10 +70,11 @@ public class Cliente implements Serializable {
         this.idusuario = idusuario;
     }
 
-    public Cliente(Integer idusuario, String nome, String cpf, String telefone, int pendencia) {
+    public Cliente(Integer idusuario, String nome, String cpf, String endereco, String telefone, String pendencia) {
         this.idusuario = idusuario;
         this.nome = nome;
         this.cpf = cpf;
+        this.endereco = endereco;
         this.telefone = telefone;
         this.pendencia = pendencia;
     }
@@ -93,13 +95,6 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
     public String getEndereco() {
         return endereco;
@@ -109,19 +104,12 @@ public class Cliente implements Serializable {
         this.endereco = endereco;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public int getPendencia() {
+    public String getPendencia() {
         return pendencia;
     }
 
-    public void setPendencia(int pendencia) {
+    public void setPendencia(String pendencia) {
         this.pendencia = pendencia;
     }
 
@@ -175,6 +163,22 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "Model.Cliente[ idusuario=" + idusuario + " ]";
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
     
 }
