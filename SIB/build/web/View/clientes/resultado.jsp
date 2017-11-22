@@ -19,7 +19,7 @@
                 <div class="container">
                     <div class="row text-center">
                         <div class="col-md-12 text-center">
-                            <h1 class="text-center">Sistema de Gerenciamento de Cursos</h1>
+                            <h1 class="text-center">Sistema de Gerenciamento de Biblioteca</h1>
                         </div>
                     </div>
                 </div>

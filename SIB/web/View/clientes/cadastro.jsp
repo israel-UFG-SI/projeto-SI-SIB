@@ -55,7 +55,7 @@
                                     <label for="inputCPF" class="control-label">Informar o CPF:</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="text" name="cpf" id="inputCPF" title="O formato precisa ser XXX.XXX.XXX-XX" class="form-control" maxlength="14" placeholder="CPF">
+                                    <input type="text" name="cpf" id="inputCPF" title="O formato precisa ser XXX.XXX.XXX-XX" class="form-control" minlength="14" placeholder="CPF">
                                 </div>
                                 <script>
                                     $("#inputCPF").mask("000.000.000-09");
@@ -74,7 +74,7 @@
                                     <label for="inputTelefone" class="control-label">Informar o Telefone:</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="text" name="telefone" class="form-control" id="inputTelefone" placeholder="Telefone" required maxlength="13" title="O  número de telefone precisa atender o formato (XX) X XXXXX-XXXX">
+                                    <input type="text" name="telefone" class="form-control" id="inputTelefone" placeholder="Telefone" required minlength="16" title="O  número de telefone precisa atender o formato (XX) X XXXXX-XXXX">
                                 </div>
                                 <script>
                                     $("#inputTelefone").mask("(00) 0 0000-0009");

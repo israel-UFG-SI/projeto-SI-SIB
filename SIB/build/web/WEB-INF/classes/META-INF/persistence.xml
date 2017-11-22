@@ -11,9 +11,6 @@
     <class>Model.Exemplar</class>
     <class>Model.Multa</class>
     <class>Model.Autor</class>
-    <class>Model.Login</class>
-    <class>Model.Reserva</class>
-    <class>Model.Cliente</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sib?zeroDateTimeBehavior=convertToNull"/>

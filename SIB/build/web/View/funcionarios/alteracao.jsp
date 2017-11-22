@@ -28,7 +28,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h3 class="tt_menu">&gt;&gt; CLIENTES - ALTERAR UM CLIENTE &lt;&lt;</h3>
+                        <h3 class="tt_menu">&gt;&gt; FUNCIONÁRIOS - ALTERAR UM FUNCINARIO &lt;&lt;</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -36,18 +36,35 @@
                         <form class="form-horizontal" role="form" action="http://localhost/SIB/Controlador" method="post">
                             <div class="form-group">
                                 <div class="col-sm-2">
-                                    <label for="inputIdUsuario" class="control-label">Informar o Código:</label>
+                                    <label for="inputIdFuncinario" class="control-label">Informar o Código:</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="number" name="idUsuario" class="form-control" id="inputIdUsuario" placeholder="Informe o código" title="Digite o código único númerico" required="">
+                                    <input type="number" name="idFuncionario" class="form-control" id="inputIdFuncionario" placeholder="Informe o código" title="Digite o código único númerico" required="">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label for="inputSenha" class="control-label">Informar a Senha:</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="password" name="senha" class="form-control" id="inputSenha" placeholder="Senha" required>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-sm-2">
                                     <label for="inputNome" class="control-label">Informar o Nome:</label>
                                 </div>
                                 <div class="col-sm-10">
                                     <input type="text" name="nome" class="form-control" id="inputNome" placeholder="Nome" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label for="inputCargaHoraria" class="control-label">Informar a Carga Horária:</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="number" name="cargaHoraria" class="form-control" id="inputCargaHoraria" placeholder="Carga Horária em (H)" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -69,8 +86,8 @@
                                     $("#inputTelefone").mask("(00) 0 0000-0009");
                                 </script>
                             </div>
-                            <input type="hidden" name="idFormulario" value="1" />
-                            <input type="hidden" name="tipoFormulario" value="14" />
+                            <input type="hidden" name="idFormulario" value="4" />
+                            <input type="hidden" name="tipoFormulario" value="44" />
                             <div class="col-md-12 text-center">
                                 <button type="submit" class="btn btn-danger">Alterar</button>
                             </div>

@@ -19,7 +19,7 @@
                 <div class="container">
                     <div class="row text-center">
                         <div class="col-md-12 text-center">
-                            <h1 class="text-center">Sistema de Gerenciamento de Biblioteca</h1>
+                            <h1 class="text-center">Sistema Integrado de Biblioteca</h1>
                         </div>
                     </div>
                 </div>
@@ -29,13 +29,14 @@
                     <div class="row text-center">
                         <div class="col-md-12 text-center">
                             <h2 class="text-center">${mensagem}</h2>
-                            <c:if test="${cliente != null}">
-                                <h4 class="text-center"> Código: ${cliente.idusuario}</h4>
-                                <h4 class="text-center"> Nome: ${cliente.nome}</h4>
-                                <h4 class="text-center"> CPF: ${cliente.cpf}</h4>
-                                <h4 class="text-center"> Endereço: ${cliente.endereco}</h4>
-                                <h4 class="text-center"> Telefone: ${cliente.telefone}</h4>
-                                <h4 class="text-center"> Pendencia: ${cliente.pendencia}</h4>
+                            <c:if test="${funcionario != null}">
+                                <h4 class="text-center"> Código: ${funcionario.idfuncionario}</h4>
+                                <h4 class="text-center"> Senha: ${funcionario.senha}</h4>
+                                <h4 class="text-center"> Nome: ${funcionario.nome}</h4>
+                                <h4 class="text-center"> CPF: ${funcionario.cpf}</h4>
+                                <h4 class="text-center"> Carga Horaria: ${funcionario.cargaHorario}</h4>
+                                <h4 class="text-center"> Endereço: ${funcionario.endereco}</h4>
+                                <h4 class="text-center"> Telefone: ${funcionario.telefone}</h4>
                             </c:if>
                         </div>
                     </div>
