@@ -31,8 +31,8 @@
                         <div class="col-md-12 text-center">
                             <h2 class="text-center">${mensagem}</h2>
                             <c:if test="${livro != null}">
-                                <h4 class="text-center"> Código: ${livro.idlivro}</h4>
-                                <h4 class="text-center"> Título: ${livro.titulo}</h4>
+                                <h4 class="text-center"> CÓDIGO: ${livro.idlivro}</h4>
+                                <h4 class="text-center"> TÍTULO: ${livro.titulo}</h4>
                                 <h4 class="text-center"> ISBN: ${livro.isbn}</h4>
                                 <h4 class="text-center"> AUTOR: ${livro.autor}</h4>
                                 <h4 class="text-center"> EDITORA ${livro.editora}</h4>

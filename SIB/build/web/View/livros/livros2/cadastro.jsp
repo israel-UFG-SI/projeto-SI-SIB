@@ -39,7 +39,7 @@
                                     <label for="inputIdLivro" class="control-label">Informar o Código:</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="number" name="idLivro" min="0" lass="form-control" id="IdLivro" placeholder="Informe o código" title="Digite o código único númerico" required="">
+                                    <input type="number" name="idLivro" min="0" class="form-control" id="IdLivro" placeholder="Informe o código" title="Digite o código único númerico" required="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -99,16 +99,9 @@
                                     <input type="text" name="secao" class="form-control" id="inputSecao" placeholder="Seção" required>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-2">
-                                    <label for="inputQtd" class="control-label">Informar a Quatidade:</label>
-                                </div>
-                                <div class="col-sm-10">
-                                    <input type="number" min="0" name="qtd" class="form-control" id="inputQtd" placeholder="Quantidade de Exemplares" required>
-                                </div>
-                            </div>
                             <input type="hidden" name="idFormulario" value="2" />
                             <input type="hidden" name="tipoFormulario" value="23" />
+                            <input type="hidden" name="qtd" value="0" />
                             <div class="col-md-12 text-center">
                                 <button type="submit" class="btn btn-danger">Cadastrar</button>
                             </div>

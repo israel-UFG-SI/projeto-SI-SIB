@@ -99,16 +99,9 @@
                                     <input type="text" name="secao" class="form-control" id="inputSecao" placeholder="Seção" required>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-2">
-                                    <label for="inputQtd" class="control-label">Informar a Quatidade:</label>
-                                </div>
-                                <div class="col-sm-10">
-                                    <input type="number" name="qtd" class="form-control" min="0" id="inputQtd" placeholder="Quantidade de Exemplares" required>
-                                </div>
-                            </div>
                             <input type="hidden" name="idFormulario" value="2" />
                             <input type="hidden" name="tipoFormulario" value="24" />
+                            <input type="hidden" name="qtd" value="0" />
                             <div class="col-md-12 text-center">
                                 <button type="submit" class="btn btn-danger">Alterar</button>
                             </div>

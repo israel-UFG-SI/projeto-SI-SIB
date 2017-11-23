@@ -41,7 +41,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th scope="col">CÓDIGO</th>
+                                                <th scope="col">CÓDIGO LIVRO</th>
                                                 <th scope="col">TÍTULO</th>
                                                 <th scope="col">ISBN</th>
                                                 <th scope="col">AUTOR</th>

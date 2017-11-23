@@ -57,7 +57,7 @@ public class Controlador extends HttpServlet {
        
        //Variáveis Livro
        String tituloLivro, isbnLivro, autorLivro, editoraLivro, edicaoLivro, secaoLivro;
-       int idLivro, qtdLivro, anoLivro;
+       int idLivro, qtdLivro, anoLivro , idExemplar;
        
        //Variáveis Funcionarios       
        String nomeFuncionario, cpfFuncionario, senhaFuncionario, enderecoFuncionario, telFuncionario;
@@ -267,112 +267,90 @@ public class Controlador extends HttpServlet {
                         break;
                     }
            }
-       }else if (idFormulario == 3){ //Pagamento
+       }else if (idFormulario == 3){ //Exemplares
            switch (tipoFormulario){
-                case 31:{ //Consultar todos
-                    TypedQuery<Pagamento> query = em.createQuery("" + "Select c from Pagamento c", Pagamento.class);
-                    List<Pagamento> pagamentos = query.getResultList();
-                    session.setAttribute("mensagem", "Total de Pagamento(s): "+pagamentos.size() ); 
-                    session.setAttribute("pagamentos", pagamentos); 
-                    response.sendRedirect("pagamentos/consultaTodos.jsp");
-                    break;
-                }
-                case 32:{ //Consultar Especifico
-                    cpfmascara = request.getParameter("cpf");
-                    cpfmascara = cpfmascara.replaceAll("[.-]", "");
-                    cpf = Long.parseLong(cpfmascara);
-                    codCurso = Integer.parseInt(request.getParameter("cdcurso"));
-                    PagamentoPK pgtoId = new PagamentoPK(cpf, codCurso);
-                    Pagamento pagamento = em.find(Pagamento.class, pgtoId);
-                    if(pagamento != null){// pagamento encontrado
-                            session.setAttribute("mensagem", "Pagamento "+cpf+", "+codCurso+" encontrado!"); 
-                            session.setAttribute("pagamento", pagamento);
+                    case 31:{ //Consultar todos
+                        TypedQuery<Exemplar> query = em.createQuery("" + "Select c from Exemplar c", Exemplar.class);
+                        List<Exemplar> exemplares = query.getResultList();
+                        session.setAttribute("mensagem", "Total de Exemplares(s): "+exemplares.size() ); 
+                        session.setAttribute("exemplares", exemplares); 
+                        response.sendRedirect("View/livros/exemplares/consultaTodos.jsp");
+                        break;
+                    }
+                    case 32:{ //Consultar Especifico
+                       idExemplar = Integer.parseInt(request.getParameter("idExemplar"));
+                        Exemplar exemplar = em.find(Exemplar.class, idExemplar);  
+                        
+                        if(exemplar != null){// Exemplar encontrado
+                            session.setAttribute("mensagem", "Exemplar "+idExemplar+" encontrado!"); 
+                            session.setAttribute("exemplar", exemplar);
                         }else{
-                            session.setAttribute("mensagem", "Pagamento "+cpf+", "+codCurso+" não encontrado!"); 
-                            session.setAttribute("pagamento", null);
+                            session.setAttribute("mensagem", "Exemplar "+idExemplar+" não encontrado!"); 
+                            session.setAttribute("exemplar", null);
                         } 
-                        response.sendRedirect("pagamentos/resultado.jsp");
-                    break;
-                }
-                case 33:{ // Cadastrar
-                    cpfmascara = request.getParameter("cpf");
-                    cpfmascara = cpfmascara.replaceAll("[.-]", "");
-                    cpf = Long.parseLong(cpfmascara);
-                    codCurso = Integer.parseInt(request.getParameter("cdcurso"));
-                    datainscricao = request.getParameter("datainscricao");
-                    String dataFormatada = datainscricao;
-               try {
-                   SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-                   Date data;
-                   data = formato.parse(datainscricao);
-                   formato.applyPattern("dd/MM/yyyy");
-                   dataFormatada = formato.format(data);
-               } catch (ParseException ex) {
-                   Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
-               }    
-               PagamentoPK pgtoId = new PagamentoPK(cpf, codCurso);  
-               Pagamento pagamento = new Pagamento(pgtoId, dataFormatada);
-               tx.begin();
-               em.persist(pagamento);
-               tx.commit();
-               session.setAttribute("mensagem", "Pagamento "+cpf+", "+codCurso+" cadastrado!"); 
-               session.setAttribute("pagamento", pagamento);                         
-               response.sendRedirect("pagamentos/resultado.jsp");
-                    break;
-                }
-                case 34:{ // Alterar
-                    cpfmascara = request.getParameter("cpf");
-                    cpfmascara = cpfmascara.replaceAll("[.-]", "");
-                    cpf = Long.parseLong(cpfmascara);
-                    codCurso = Integer.parseInt(request.getParameter("cdcurso"));
-                    datainscricao = request.getParameter("datainscricao"); 
-                    String dataFormatada = datainscricao;
-               try {
-                   SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-                   Date data;
-                   data = formato.parse(datainscricao);
-                   formato.applyPattern("dd/MM/yyyy");
-                   dataFormatada = formato.format(data);
-               } catch (ParseException ex) {
-                   Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
-               }
-                PagamentoPK pgtoId = new PagamentoPK(cpf, codCurso);
-                Pagamento pagamento = em.find(Pagamento.class, pgtoId);
-                if(pagamento != null){// pagamento encontrado
-                    pagamento = new Pagamento(pgtoId, dataFormatada);                           
-                    tx.begin();
-                    em.merge(pagamento);
-                    tx.commit();                            
-                    session.setAttribute("mensagem", "Pagamento "+cpf+", "+codCurso+" Alterado!"); 
-                    session.setAttribute("pagamento", pagamento);
-                }else{
-                    session.setAttribute("mensagem", "Pagamento "+cpf+", "+codCurso+" não encontrado!"); 
-                    session.setAttribute("pagamento", null);
-                }                }
-                response.sendRedirect("pagamentos/resultado.jsp");
-                break;
-                case 35:{ // Excluir
-                    cpfmascara = request.getParameter("cpf");
-                    cpfmascara = cpfmascara.replaceAll("[.-]", "");
-                    cpf = Long.parseLong(cpfmascara);
-                    codCurso = Integer.parseInt(request.getParameter("cdcurso"));
-                    PagamentoPK pgtoId = new PagamentoPK(cpf, codCurso);
-                    Pagamento pagamento = em.find(Pagamento.class, pgtoId);
-                    if(pagamento != null){// pagamento encontrado
+                        response.sendRedirect("View/livros/exemplares/resultado.jsp");
+                        break;
+                    }
+                    case 33:{ // Cadastrar
+                        idLivro = Integer.parseInt(request.getParameter("idLivro"));
+                        idExemplar = Integer.parseInt(request.getParameter("idExemplar"));
+                        
+                        Livro livro = em.find(Livro.class, idLivro);  
+                        
+                        if(livro != null){// livro encontrado
+                            tituloLivro = livro.getTitulo();
+                            isbnLivro = livro.getIsbn();
+                            autorLivro = livro.getAutor();
+                            editoraLivro = livro.getEditora();
+                            edicaoLivro = livro.getEdição();
+                            anoLivro = livro.getAno();
+                            secaoLivro = livro.getSecao();
+                            qtdLivro = livro.getQuantidade();
+                            qtdLivro++;
+                            livro = new Livro(idLivro, tituloLivro, isbnLivro, editoraLivro, secaoLivro, anoLivro, autorLivro, secaoLivro, qtdLivro);
+                            Exemplar exemplar = new Exemplar(idExemplar, livro);
+                        try {
                             tx.begin();
-                            em.remove(pagamento);
+                            em.persist(exemplar);
+                            em.merge(livro);
                             tx.commit();
-                            session.setAttribute("mensagem", "Pagamento "+cpf+", "+codCurso+" excluido!");                             
+                            session.setAttribute("mensagem", "Exemplar "+idExemplar+" cadastrado!"); 
+                            session.setAttribute("exemplar", exemplar);
+                        } catch (Exception e) {
+                            session.setAttribute("mensagem", "Código "+idExemplar+" já está sendo usado! Por favor, tente novamente com outro"); 
+                            session.setAttribute("exemplar", null);
+                        }
                         }else{
-                            session.setAttribute("mensagem", "Pagamento "+cpf+", "+codCurso+" não encontrado!");
+                            session.setAttribute("mensagem", "Código do Livro "+idLivro+" não encontrado! Verifique se está correto e tente novamente"); 
+                            session.setAttribute("exemplar", null);
+                        }        
+                        response.sendRedirect("View/livros/exemplares/resultado.jsp");
+                        break;
+                        }
+                    case 34:{ // Excluir
+                       idExemplar = Integer.parseInt(request.getParameter("idExemplar"));
+                        Exemplar exemplar = em.find(Exemplar.class, idExemplar); 
+                        
+                        if(exemplar != null){// cliente encontrado
+                            Livro livro = exemplar.getLivro();
+                            qtdLivro=livro.getQuantidade();
+                            qtdLivro--;
+                            Livro livro2 = new Livro(livro.getIdlivro(), livro.getTitulo(), livro.getIsbn(), livro.getEditora(), livro.getEdição(), livro.getAno(), livro.getAutor(), livro.getSecao(), qtdLivro);
+                            tx.begin();
+                            em.merge(livro2);
+                            em.remove(exemplar);
+                            tx.commit();
+                            session.setAttribute("mensagem", "Exemplar "+idExemplar+" excluido!");                             
+                        }else{
+                            session.setAttribute("mensagem", "Exemplar "+idExemplar+" não encontrado!");
                         } 
-                        session.setAttribute("pagamento", null);
-                        response.sendRedirect("pagamentos/resultado.jsp");
-                    break;
-                }
-           }
-       }else if (idFormulario == 4){ //Cliente
-           switch (tipoFormulario){
+                        session.setAttribute("exemplar", null);
+                        response.sendRedirect("View/livros/exemplares/resultado.jsp");
+                        break;
+                        }
+                    }
+           }else if (idFormulario == 4){ //Funcionário
+                switch (tipoFormulario){
                     case 41:{ //Consultar todos
                         TypedQuery<Funcionario> query = em.createQuery("" + "Select c from Funcionario c", Funcionario.class);
                         List<Funcionario> funcionarios = query.getResultList();

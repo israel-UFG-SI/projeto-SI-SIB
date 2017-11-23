@@ -30,16 +30,17 @@
                     <div class="row text-center">
                         <div class="col-md-12 text-center">
                             <h2 class="text-center">${mensagem}</h2>
-                            <c:if test="${livro != null}">
-                                <h4 class="text-center"> CÓDIGO: ${livro.idlivro}</h4>
-                                <h4 class="text-center"> TÍTULO: ${livro.titulo}</h4>
-                                <h4 class="text-center"> ISBN: ${livro.isbn}</h4>
-                                <h4 class="text-center"> AUTOR: ${livro.autor}</h4>
-                                <h4 class="text-center"> EDITORA ${livro.editora}</h4>
-                                <h4 class="text-center"> EDIÇÃO: ${livro.edição}</h4>
-                                <h4 class="text-center"> ANO: ${livro.ano}</h4>
-                                <h4 class="text-center"> SEÇÃO: ${livro.secao}</h4>
-                                <h4 class="text-center"> QUANTIDADE: ${livro.quantidade}</h4>
+                            <c:if test="${exemplar != null}">
+                                <h4 class="text-center"> CÓDIGO EXEMPLAR: ${exemplar.idexemplar}</h4>
+                                <h4 class="text-center"> CÓDIGO LIVRO: ${exemplar.livro.idlivro}</h4>
+                                <h4 class="text-center"> TÍRTULO: ${exemplar.livro.titulo}</h4>
+                                <h4 class="text-center"> ISBN: ${exemplar.livro.isbn}</h4>
+                                <h4 class="text-center"> AUTOR: ${exemplar.livro.autor}</h4>
+                                <h4 class="text-center"> EDITORA ${exemplar.livro.editora}</h4>
+                                <h4 class="text-center"> EDIÇÃO: ${exemplar.livro.edição}</h4>
+                                <h4 class="text-center"> ANO: ${exemplar.livro.ano}</h4>
+                                <h4 class="text-center"> SEÇÃO: ${exemplar.livro.secao}</h4>
+                                <h4 class="text-center"> QUANTIDADE: ${exemplar.livro.quantidade}</h4>
                             </c:if>
                         </div>
                     </div>
@@ -50,7 +51,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <a class="btn btn-default" href="index.jsp">Retornar ao Menu Livro</a>
+                            <a class="btn btn-default" href="index.jsp">Retornar ao Menu Exemplar</a>
                         </div>
                     </div>
                 </div>

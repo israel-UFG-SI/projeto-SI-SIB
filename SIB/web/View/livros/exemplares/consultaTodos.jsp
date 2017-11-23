@@ -29,7 +29,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <h3 class="tt_menu">&gt;&gt; LIVROS - CONSULTAR TODOS OS LIVROS &lt;&lt;</h3>
+                            <h3 class="tt_menu">&gt;&gt; EXEMPLARES - CONSULTAR TODOS OS EXEMPLARES &lt;&lt;</h3>
                         </div>
                     </div>
 
@@ -41,6 +41,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
+                                                <th scope="col">CÓDIGO EXEMPLAR</th>
                                                 <th scope="col">CÓDIGO LIVRO</th>
                                                 <th scope="col">TÍTULO</th>
                                                 <th scope="col">ISBN</th>
@@ -53,34 +54,37 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="row" items="${livros}">
+                                            <c:forEach var="row" items="${exemplares}">
                                                 <tr>
                                                     <td>
-                                                        <c:out value="${row.idlivro}" />
+                                                        <c:out value="${row.idexemplar}" />
                                                     </td>
                                                     <td>
-                                                        <c:out value="${row.titulo}" />
+                                                        <c:out value="${row.livro.idlivro}" />
                                                     </td>
                                                     <td>
-                                                        <c:out value="${row.isbn}" />
+                                                        <c:out value="${row.livro.titulo}" />
                                                     </td>
                                                     <td>
-                                                        <c:out value="${row.autor}" />
+                                                        <c:out value="${row.livro.isbn}" />
                                                     </td>
                                                     <td>
-                                                        <c:out value="${row.editora}" />
+                                                        <c:out value="${row.livro.autor}" />
                                                     </td>
                                                     <td>
-                                                        <c:out value="${row.edição}" />
+                                                        <c:out value="${row.livro.editora}" />
                                                     </td>
                                                     <td>
-                                                        <c:out value="${row.ano}" />
+                                                        <c:out value="${row.livro.edição}" />
                                                     </td>
                                                     <td>
-                                                        <c:out value="${row.secao}" />
+                                                        <c:out value="${row.livro.ano}" />
                                                     </td>
                                                     <td>
-                                                        <c:out value="${row.quantidade}" />
+                                                        <c:out value="${row.livro.secao}" />
+                                                    </td>
+                                                    <td>
+                                                        <c:out value="${row.livro.quantidade}" />
                                                     </td>
                                                 </tr>
                                             </c:forEach>

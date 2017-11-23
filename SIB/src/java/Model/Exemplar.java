@@ -36,13 +36,14 @@ public class Exemplar implements Serializable {
     private Integer idexemplar;
     @JoinColumn(name = "livro", referencedColumnName = "idlivro")
     @ManyToOne(optional = false)
-    private Livro livro;
+    public Livro livro;
 
     public Exemplar() {
     }
 
-    public Exemplar(Integer idexemplar) {
+    public Exemplar(Integer idexemplar, Livro livro) {
         this.idexemplar = idexemplar;
+        this.livro = livro;
     }
 
     public Integer getIdexemplar() {
