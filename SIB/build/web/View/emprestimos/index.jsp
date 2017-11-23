@@ -1,15 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-    <jsp:include page="../../util/topo.jsp" />
+    <jsp:include page="../util/topo.jsp" />
     <html>
 
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="text/javascript" src="../../../lib/js/jquery.min.js"></script>
-        <script type="text/javascript" src="../../../lib/js/bootstrap.min.js"></script>
-        <link href="../../../lib/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="../../../lib/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="../../../lib/css/padrao.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="../../lib/js/jquery.min.js"></script>
+        <script type="text/javascript" src="../../lib/js/bootstrap.min.js"></script>
+        <link href="../../lib/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="../../lib/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="../../lib/css/padrao.css" rel="stylesheet" type="text/css">
     </head>
 
     <body>
@@ -28,11 +28,10 @@
                     <div class="col-md-12 text-center">
                         <h3 class="tt_menu">&gt;&gt; LIVROS &lt;&lt;</h3>
                         <div class="col-md-12  btn-group btn-group-lg btn-group-vertical">
-                            <a href="confirmarConsultaTodos.jsp" class="btn btn-default">Consultar Todos os Livros</a>
-                            <a href="consulta.jsp" class="btn btn-default">Consultar um Livro Específico</a>
-                            <a href="cadastro.jsp" class="btn btn-default">Cadastrar um Novo Livro</a>
-                            <a href="alteracao.jsp" class="btn btn-default">Alterar um Livro</a>
-                            <a href="exclusao.jsp" class="btn btn-default">Excluir um Livro</a>
+                            <a href="emprestimos2/index.jsp" class="btn btn-default">Empréstimos</a>
+                            <a href="multas/index.jsp" class="btn btn-default">Multas</a>
+                            <a href="reservas/index.jsp" class="btn btn-default">Reservas</a>
+                            <a href="disponibilidade/consulta.jsp" class="btn btn-default">Verificar Exemplares Disponíveis</a>
                         </div>
                     </div>
                 </div>

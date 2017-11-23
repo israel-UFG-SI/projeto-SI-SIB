@@ -35,6 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Emprestimo.findByDataDevEfetiva", query = "SELECT e FROM Emprestimo e WHERE e.dataDevEfetiva = :dataDevEfetiva")})
 public class Emprestimo implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "situa\u00e7\u00e3o")
+    private String situação;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -142,6 +146,14 @@ public class Emprestimo implements Serializable {
     @Override
     public String toString() {
         return "Model.Emprestimo[ idemprestimo=" + idemprestimo + " ]";
+    }
+
+    public String getSituação() {
+        return situação;
+    }
+
+    public void setSituação(String situação) {
+        this.situação = situação;
     }
     
 }

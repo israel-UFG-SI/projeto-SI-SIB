@@ -32,7 +32,6 @@
                             <a href="consulta.jsp" class="btn btn-default">Consultar um Cliente Específico</a>
                             <a href="cadastro.jsp" class="btn btn-default">Cadastrar um Novo Cliente</a>
                             <a href="alteracao.jsp" class="btn btn-default">Alterar um Cliente</a>
-                            <a href="exclusao.jsp" class="btn btn-default">Excluir um Cliente</a>
                         </div>
                     </div>
                 </div>

@@ -32,7 +32,6 @@
                             <a href="consulta.jsp" class="btn btn-default">Consultar um Livro Específico</a>
                             <a href="cadastro.jsp" class="btn btn-default">Cadastrar um Novo Livro</a>
                             <a href="alteracao.jsp" class="btn btn-default">Alterar um Livro</a>
-                            <a href="atualizarqtd.jsp" class="btn btn-default">Atualizar a Quatidade de Exemplares</a>
                             <a href="exclusao.jsp" class="btn btn-default">Excluir um Livro</a>
                         </div>
                     </div>

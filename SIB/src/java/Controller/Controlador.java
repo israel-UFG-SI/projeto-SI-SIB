@@ -6,15 +6,10 @@
 package Controller;
 
 import Model.*;
-import static Model.Emprestimo_.funcionario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -130,23 +125,7 @@ public class Controlador extends HttpServlet {
                         } 
                         response.sendRedirect("View/clientes/resultado.jsp");
                         break;
-                    }
-                    case 15:{ // Excluir
-                        idCliente = Integer.parseInt(request.getParameter("idUsuario"));
-                        Cliente cliente = em.find(Cliente.class, idCliente);
-                        
-                        if(cliente != null){// cliente encontrado
-                            tx.begin();
-                            em.remove(cliente);
-                            tx.commit();
-                            session.setAttribute("mensagem", "Cliente "+idCliente+" excluido!");                             
-                        }else{
-                            session.setAttribute("mensagem", "Cliente "+idCliente+" não encontrado!");
-                        } 
-                        session.setAttribute("cliente", null);
-                        response.sendRedirect("View/clientes/resultado.jsp");
-                        break;
-                    }
+                    }                    
            }
            
        }else if(idFormulario == 2){ //LIVRO
@@ -155,7 +134,7 @@ public class Controlador extends HttpServlet {
                     case 21:{ //Consultar todos
                         TypedQuery<Livro> query = em.createQuery("" + "Select c from Livro c", Livro.class);
                         List<Livro> livros = query.getResultList();
-                        session.setAttribute("mensagem", "Total de Livros(s): "+livros.size() ); 
+                        session.setAttribute("mensagem", "Total de Livro(s): "+livros.size() ); 
                         session.setAttribute("livros", livros); 
                         response.sendRedirect("View/livros/livros2/consultaTodos.jsp");
                         break;
@@ -224,32 +203,7 @@ public class Controlador extends HttpServlet {
                         response.sendRedirect("View/livros/livros2/resultado.jsp");
                         break;
                     }
-                    case 25:{ // Atualizar Qtd
-                        idLivro = Integer.parseInt(request.getParameter("idLivro"));                        
-                        qtdLivro = Integer.parseInt(request.getParameter("qtd"));
-                        Livro livro = em.find(Livro.class, idLivro);  
-                        
-                        if(livro != null){// livro encontrado
-                            tituloLivro = livro.getTitulo();
-                            isbnLivro = livro.getIsbn();
-                            autorLivro = livro.getAutor();
-                            editoraLivro = livro.getEditora();
-                            edicaoLivro = livro.getEdição();
-                            anoLivro = livro.getAno();
-                            secaoLivro = livro.getSecao();
-                            livro = new Livro(idLivro, tituloLivro, isbnLivro, editoraLivro, secaoLivro, anoLivro, autorLivro, secaoLivro, qtdLivro);
-                            tx.begin();
-                            em.merge(livro);
-                            tx.commit();                            
-                            session.setAttribute("mensagem", "Livro "+idLivro+" Alterado!"); 
-                            session.setAttribute("livro", livro);
-                        }else{
-                            session.setAttribute("mensagem", "Livro "+idLivro+" não encontrado!"); 
-                            session.setAttribute("livro", null);
-                        } 
-                        response.sendRedirect("View/livros/livros2/resultado.jsp");
-                        break;
-                    }
+                    
                     case 26:{ // Excluir
                         idLivro = Integer.parseInt(request.getParameter("idLivro"));
                         Livro livro = em.find(Livro.class, idLivro);  
@@ -272,7 +226,7 @@ public class Controlador extends HttpServlet {
                     case 31:{ //Consultar todos
                         TypedQuery<Exemplar> query = em.createQuery("" + "Select c from Exemplar c", Exemplar.class);
                         List<Exemplar> exemplares = query.getResultList();
-                        session.setAttribute("mensagem", "Total de Exemplares(s): "+exemplares.size() ); 
+                        session.setAttribute("mensagem", "Total de Exemplar(es): "+exemplares.size() ); 
                         session.setAttribute("exemplares", exemplares); 
                         response.sendRedirect("View/livros/exemplares/consultaTodos.jsp");
                         break;
@@ -438,8 +392,35 @@ public class Controlador extends HttpServlet {
                     }
            }
            
-       }
-       
-    }
-    
+       }else if(idFormulario == 8){ //DISPONIBILIDADE
+           
+              switch (tipoFormulario){
+                    case 82:{ //Consultar todos
+                        TypedQuery<Exemplar> query = em.createQuery("" + "Select c from Exemplar c", Exemplar.class);
+                        List<Exemplar> exemplares = query.getResultList();
+                        List<Exemplar> exemplaresSelecionados = new ArrayList();
+                        idLivro = Integer.parseInt(request.getParameter("idLivro"));
+                        Livro livro = em.find(Livro.class, idLivro);  
+                        
+                        if(livro != null){// livro encontrado                           
+                            for (Exemplar aux: exemplares){
+                                if(aux.getDisponivel().equals("Sim")){
+                                    livro = aux.getLivro();
+                                    if(livro.getIdlivro()==idLivro){
+                                        exemplaresSelecionados.add(aux);
+                                    }                                
+                                }
+                            }
+                            session.setAttribute("mensagem", "Total de Exemplar(es) Disponíveis: "+exemplares.size() ); 
+                            session.setAttribute("exemplaresSelecionados", exemplaresSelecionados);
+                        }else{
+                            session.setAttribute("mensagem", "Livro "+idLivro+" não encontrado!"); 
+                            session.setAttribute("exemplaresSelecionados", null);
+                        }
+                        response.sendRedirect("View/emprestimos/disponibilidade/consultaTodos.jsp");
+                        break;
+                    }       
+                }
+            }
+        }
 }

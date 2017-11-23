@@ -7,6 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" src="../../../lib/js/jquery.min.js"></script>
         <script type="text/javascript" src="../../../lib/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../../lib/js/jquery.mask.js"></script>
+        <script type="text/javascript" src="../../../lib/js/jquery.mask.min.js"></script>
         <link href="../../../lib/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../../../lib/css/bootstrap.css" rel="stylesheet" type="text/css">
         <link href="../../../lib/css/padrao.css" rel="stylesheet" type="text/css">
@@ -26,27 +28,43 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h3 class="tt_menu">&gt;&gt; LIVROS &lt;&lt;</h3>
-                        <div class="col-md-12  btn-group btn-group-lg btn-group-vertical">
-                            <a href="confirmarConsultaTodos.jsp" class="btn btn-default">Consultar Todos os Livros</a>
-                            <a href="consulta.jsp" class="btn btn-default">Consultar um Livro Específico</a>
-                            <a href="cadastro.jsp" class="btn btn-default">Cadastrar um Novo Livro</a>
-                            <a href="alteracao.jsp" class="btn btn-default">Alterar um Livro</a>
-                            <a href="exclusao.jsp" class="btn btn-default">Excluir um Livro</a>
-                        </div>
+                        <h3 class="tt_menu">&gt;&gt; EMPRÉSTIMOS - CONSULTAR QUANTIDADE DE EXEMPLARES DISPONÍVEIS &lt;&lt;</h3>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-horizontal" role="form" action="http://localhost/SIB/Controlador" method="post">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label for="inputIdLivro" class="control-label">Informar o Código do Livro:</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="number" min="0" name="idLivro" class="form-control" id="IdLivro" placeholder="Informe o código" title="Digite o código único númerico" required="">
+                                </div>
+                            </div>
+                            <input type="hidden" name="idFormulario" value="8" />
+                            <input type="hidden" name="tipoFormulario" value="82" />
+                            <div class="col-md-12 text-center">
+                                <button type="submit" class="btn btn-danger">Consultar</button>
+                            </div>
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
+        </div>
+        </div>
+
         <div class="section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center corrigir">
-                        <a class="btn btn-default" href="../index.jsp">Voltar</a>
+                        <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
                     </div>
                 </div>
             </div>
         </div>
+
         <footer>
             <div class="navbar navbar-fixed-bottom bgred">
                 <div class="container">
