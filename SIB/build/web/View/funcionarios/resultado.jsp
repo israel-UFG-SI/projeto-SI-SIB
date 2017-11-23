@@ -47,7 +47,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <a class="btn btn-default" href="index.jsp">Retornar ao Menu Cliente</a>
+                            <a class="btn btn-default" href="index.jsp">Retornar ao Menu Livro</a>
                         </div>
                     </div>
                 </div>

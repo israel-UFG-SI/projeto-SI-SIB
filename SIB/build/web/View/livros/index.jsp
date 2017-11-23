@@ -26,43 +26,24 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h3 class="tt_menu">&gt;&gt; FUNCIONÁRIOS - EXCLUIR UM FUNCIONÁRIO &lt;&lt;</h3>
+                        <h3 class="tt_menu">&gt;&gt; LIVROS &lt;&lt;</h3>
+                        <div class="col-md-12  btn-group btn-group-lg btn-group-vertical">
+                            <a href="livros2/index.jsp" class="btn btn-default">Livros</a>
+                            <a href="exemplares/index.jsp" class="btn btn-default">Exemplares</a>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <form class="form-horizontal" role="form" action="http://localhost/SIB/Controlador" method="post">
-                            <div class="form-group">
-                                <div class="col-sm-2">
-                                    <label for="inputIdFuncinario" class="control-label">Informar o Código:</label>
-                                </div>
-                                <div class="col-sm-10">
-                                    <input type="number" min="0" name="idFuncionario" class="form-control" id="inputIdFuncionario" placeholder="Informe o código" title="Digite o código único númerico" required="">
-                                </div>
-                            </div>
-                            <input type="hidden" name="idFormulario" value="4" />
-                            <input type="hidden" name="tipoFormulario" value="45" />
-                            <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-danger">Excluir</button>
-                            </div>
-                    </div>
-                </div>
-                </form>
             </div>
         </div>
-        </div>
-        </div>
-
         <div class="section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center corrigir">
-                        <a class="btn btn-default" href="javascript:window.history.go(-1)">Voltar</a>
+                        <a class="btn btn-default" href="../index.jsp">Voltar</a>
                     </div>
                 </div>
             </div>
         </div>
-
         <footer>
             <div class="navbar navbar-fixed-bottom bgred">
                 <div class="container">

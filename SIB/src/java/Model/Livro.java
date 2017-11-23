@@ -77,7 +77,7 @@ public class Livro implements Serializable {
         this.idlivro = idlivro;
     }
 
-    public Livro(Integer idlivro, String titulo, String isbn, String editora, String edição, int ano, String autor, String secao) {
+    public Livro(Integer idlivro, String titulo, String isbn, String editora, String edição, int ano, String autor, String secao, Integer quantidade) {
         this.idlivro = idlivro;
         this.titulo = titulo;
         this.isbn = isbn;
@@ -86,6 +86,7 @@ public class Livro implements Serializable {
         this.ano = ano;
         this.autor = autor;
         this.secao = secao;
+        this.quantidade = quantidade;
     }
 
     public Integer getIdlivro() {

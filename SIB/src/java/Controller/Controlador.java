@@ -55,6 +55,10 @@ public class Controlador extends HttpServlet {
        String nomeCliente , cpfCliente , telCliente, enderecoCliente, pendenciaCliente;
        int idCliente;
        
+       //Variáveis Livro
+       String tituloLivro, isbnLivro, autorLivro, editoraLivro, edicaoLivro, secaoLivro;
+       int idLivro, qtdLivro, anoLivro;
+       
        //Variáveis Funcionarios       
        String nomeFuncionario, cpfFuncionario, senhaFuncionario, enderecoFuncionario, telFuncionario;
        int idFuncionario, chFuncionario;
@@ -143,86 +147,125 @@ public class Controlador extends HttpServlet {
                         response.sendRedirect("View/clientes/resultado.jsp");
                         break;
                     }
-                    default:{
-                        System.out.println("Opção escolhida não identificada, tente novamente");
-                        break;
-                    }
            }
            
-       }else if(idFormulario == 2){ //Curso
+       }else if(idFormulario == 2){ //LIVRO
            
-           switch (tipoFormulario){
-                case 21:{ //Consultar todos
-                    TypedQuery<Curso> query = em.createQuery("" + "Select c from Curso c", Curso.class);
-                    List<Curso> cursos = query.getResultList();
-                    session.setAttribute("mensagem", "Total de Cursos(s): "+cursos.size() ); 
-                    session.setAttribute("cursos", cursos); 
-                    response.sendRedirect("cursos/consultaTodos.jsp");
-                    break;
-                }
-                case 22:{ //Consultar Especifico
-                    codCurso = Integer.parseInt(request.getParameter("cdcurso"));
-                    Curso curso = em.find(Curso.class, codCurso);
-                    if(curso != null){// curso encontrado
-                            session.setAttribute("mensagem", "Curso "+codCurso+" encontrado!"); 
-                            session.setAttribute("curso", curso);
+              switch (tipoFormulario){
+                    case 21:{ //Consultar todos
+                        TypedQuery<Livro> query = em.createQuery("" + "Select c from Livro c", Livro.class);
+                        List<Livro> livros = query.getResultList();
+                        session.setAttribute("mensagem", "Total de Livros(s): "+livros.size() ); 
+                        session.setAttribute("livros", livros); 
+                        response.sendRedirect("View/livros/livros2/consultaTodos.jsp");
+                        break;
+                    }
+                    case 22:{ //Consultar Especifico
+                        idLivro = Integer.parseInt(request.getParameter("idLivro"));
+                        Livro livro = em.find(Livro.class, idLivro);  
+                        
+                        if(livro != null){// livro encontrado
+                            session.setAttribute("mensagem", "Livro "+idLivro+" encontrado!"); 
+                            session.setAttribute("livro", livro);
                         }else{
-                            session.setAttribute("mensagem", "Curso "+codCurso+" não encontrado!"); 
-                            session.setAttribute("curso", null);
+                            session.setAttribute("mensagem", "Livro "+idLivro+" não encontrado!"); 
+                            session.setAttribute("livro", null);
                         } 
-                        response.sendRedirect("cursos/resultado.jsp");
-                    break;
-                }
-                case 23:{ // Cadastrar
-                    codCurso = Integer.parseInt(request.getParameter("cdcurso"));
-                    nomeCurso = request.getParameter("nome");
-                    valor = Integer.parseInt(request.getParameter("valor"));
-                    site = request.getParameter("site"); 
-                    Curso curso = new Curso(codCurso, nomeCurso, valor, site);
-                    tx.begin();
-                    em.persist(curso);
-                    tx.commit();
-                    session.setAttribute("mensagem", "Curso "+codCurso+" cadastrado!"); 
-                    session.setAttribute("curso", curso);                         
-                    response.sendRedirect("cursos/resultado.jsp");                        
-                    break;
-                }
-                case 24:{ // Alterar
-                    codCurso = Integer.parseInt(request.getParameter("cdcurso"));
-                    nomeCurso = request.getParameter("nome");
-                    valor = Integer.parseInt(request.getParameter("valor"));
-                    site = request.getParameter("site");
-                    Curso curso = em.find(Curso.class, codCurso);
-                    if(curso != null){// curso encontrado
-                            curso = new Curso(codCurso, nomeCurso, valor, site);                            
+                        response.sendRedirect("View/livros/livros2/resultado.jsp");
+                        break;
+                    }
+                    case 23:{ // Cadastrar
+                        idLivro = Integer.parseInt(request.getParameter("idLivro"));
+                        tituloLivro = request.getParameter("titulo");
+                        isbnLivro = request.getParameter("ISBN");
+                        autorLivro = request.getParameter("autor");
+                        editoraLivro = request.getParameter("editora");                        
+                        edicaoLivro = request.getParameter("edicao");
+                        anoLivro = Integer.parseInt(request.getParameter("ano"));
+                        secaoLivro = request.getParameter("secao");
+                        qtdLivro = Integer.parseInt(request.getParameter("qtd"));
+                        Livro livro = new Livro(idLivro, tituloLivro, isbnLivro, editoraLivro, secaoLivro, anoLivro, autorLivro, secaoLivro , qtdLivro);
+                        try {
                             tx.begin();
-                            em.merge(curso);
-                            tx.commit();                            
-                            session.setAttribute("mensagem", "Curso "+codCurso+" Alterado!"); 
-                            session.setAttribute("curso", curso);
-                        }else{
-                            session.setAttribute("mensagem", "Curso "+codCurso+" não encontrado!"); 
-                            session.setAttribute("curso", null);
-                        } 
-                        response.sendRedirect("cursos/resultado.jsp");
-                    break;
-                }
-                case 25:{ // Excluir
-                    
-                codCurso = Integer.parseInt(request.getParameter("cdcurso"));
-                    Curso curso = em.find(Curso.class, codCurso);
-                     if(curso != null){// curso encontrado
-                            tx.begin();
-                            em.remove(curso);
+                            em.persist(livro);
                             tx.commit();
-                            session.setAttribute("mensagem", "Curso "+codCurso+" excluido!");                             
+                            session.setAttribute("mensagem", "Livro "+idLivro+" cadastrado!"); 
+                            session.setAttribute("livro", livro);
+                        } catch (Exception e) {
+                            session.setAttribute("mensagem", "Código "+idLivro+" já está sendo usado! Por favor, tente novamente com outro"); 
+                            session.setAttribute("livro", null);
+                        }                                                 
+                        response.sendRedirect("View/livros/livros2/resultado.jsp");
+                        break;
+                    }
+                    case 24:{ // Alterar
+                        idLivro = Integer.parseInt(request.getParameter("idLivro"));
+                        tituloLivro = request.getParameter("titulo");
+                        isbnLivro = request.getParameter("ISBN");
+                        autorLivro = request.getParameter("autor");
+                        editoraLivro = request.getParameter("editora");                        
+                        edicaoLivro = request.getParameter("edicao");
+                        anoLivro = Integer.parseInt(request.getParameter("ano"));
+                        secaoLivro = request.getParameter("secao");
+                        qtdLivro = Integer.parseInt(request.getParameter("qtd"));
+                        Livro livro = em.find(Livro.class, idLivro);  
+                        
+                        if(livro != null){// livro encontrado
+                            livro = new Livro(idLivro, tituloLivro, isbnLivro, editoraLivro, secaoLivro, anoLivro, autorLivro, secaoLivro, qtdLivro);
+                            tx.begin();
+                            em.merge(livro);
+                            tx.commit();                            
+                            session.setAttribute("mensagem", "Livro "+idLivro+" Alterado!"); 
+                            session.setAttribute("livro", livro);
                         }else{
-                            session.setAttribute("mensagem", "Curso "+codCurso+" não encontrado!");
+                            session.setAttribute("mensagem", "Livro "+idLivro+" não encontrado!"); 
+                            session.setAttribute("livro", null);
                         } 
-                        session.setAttribute("curso", null);
-                        response.sendRedirect("cursos/resultado.jsp");
-                    break;
-                }
+                        response.sendRedirect("View/livros/livros2/resultado.jsp");
+                        break;
+                    }
+                    case 25:{ // Atualizar Qtd
+                        idLivro = Integer.parseInt(request.getParameter("idLivro"));                        
+                        qtdLivro = Integer.parseInt(request.getParameter("qtd"));
+                        Livro livro = em.find(Livro.class, idLivro);  
+                        
+                        if(livro != null){// livro encontrado
+                            tituloLivro = livro.getTitulo();
+                            isbnLivro = livro.getIsbn();
+                            autorLivro = livro.getAutor();
+                            editoraLivro = livro.getEditora();
+                            edicaoLivro = livro.getEdição();
+                            anoLivro = livro.getAno();
+                            secaoLivro = livro.getSecao();
+                            livro = new Livro(idLivro, tituloLivro, isbnLivro, editoraLivro, secaoLivro, anoLivro, autorLivro, secaoLivro, qtdLivro);
+                            tx.begin();
+                            em.merge(livro);
+                            tx.commit();                            
+                            session.setAttribute("mensagem", "Livro "+idLivro+" Alterado!"); 
+                            session.setAttribute("livro", livro);
+                        }else{
+                            session.setAttribute("mensagem", "Livro "+idLivro+" não encontrado!"); 
+                            session.setAttribute("livro", null);
+                        } 
+                        response.sendRedirect("View/livros/livros2/resultado.jsp");
+                        break;
+                    }
+                    case 26:{ // Excluir
+                        idLivro = Integer.parseInt(request.getParameter("idLivro"));
+                        Livro livro = em.find(Livro.class, idLivro);  
+                        
+                        if(livro != null){// cliente encontrado
+                            tx.begin();
+                            em.remove(livro);
+                            tx.commit();
+                            session.setAttribute("mensagem", "Livro "+idLivro+" excluido!");                             
+                        }else{
+                            session.setAttribute("mensagem", "Livro "+idLivro+" não encontrado!");
+                        } 
+                        session.setAttribute("livro", null);
+                        response.sendRedirect("View/livros/livros2/resultado.jsp");
+                        break;
+                    }
            }
        }else if (idFormulario == 3){ //Pagamento
            switch (tipoFormulario){

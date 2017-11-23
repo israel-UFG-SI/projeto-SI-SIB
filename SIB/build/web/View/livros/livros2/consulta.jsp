@@ -1,15 +1,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-    <jsp:include page="../util/topo.jsp" />
+    <jsp:include page="../../util/topo.jsp" />
     <html>
 
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="text/javascript" src="../../lib/js/jquery.min.js"></script>
-        <script type="text/javascript" src="../../lib/js/bootstrap.min.js"></script>
-        <link href="../../lib/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="../../lib/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="../../lib/css/padrao.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="../../../lib/js/jquery.min.js"></script>
+        <script type="text/javascript" src="../../../lib/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../../lib/js/jquery.mask.js"></script>
+        <script type="text/javascript" src="../../../lib/js/jquery.mask.min.js"></script>
+        <link href="../../../lib/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="../../../lib/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="../../../lib/css/padrao.css" rel="stylesheet" type="text/css">
     </head>
 
     <body>
@@ -26,7 +28,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h3 class="tt_menu">&gt;&gt; FUNCIONÁRIOS - EXCLUIR UM FUNCIONÁRIO &lt;&lt;</h3>
+                        <h3 class="tt_menu">&gt;&gt; LIVROS - CONSULTAR UM LIVRO &lt;&lt;</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -34,16 +36,16 @@
                         <form class="form-horizontal" role="form" action="http://localhost/SIB/Controlador" method="post">
                             <div class="form-group">
                                 <div class="col-sm-2">
-                                    <label for="inputIdFuncinario" class="control-label">Informar o Código:</label>
+                                    <label for="inputIdLivro" class="control-label">Informar o Código:</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="number" min="0" name="idFuncionario" class="form-control" id="inputIdFuncionario" placeholder="Informe o código" title="Digite o código único númerico" required="">
+                                    <input type="number" min="0" name="idLivro" class="form-control" id="IdLivro" placeholder="Informe o código" title="Digite o código único númerico" required="">
                                 </div>
                             </div>
-                            <input type="hidden" name="idFormulario" value="4" />
-                            <input type="hidden" name="tipoFormulario" value="45" />
+                            <input type="hidden" name="idFormulario" value="2" />
+                            <input type="hidden" name="tipoFormulario" value="22" />
                             <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-danger">Excluir</button>
+                                <button type="submit" class="btn btn-danger">Consultar</button>
                             </div>
                     </div>
                 </div>

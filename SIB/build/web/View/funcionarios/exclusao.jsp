@@ -37,7 +37,7 @@
                                     <label for="inputIdFuncinario" class="control-label">Informar o Código:</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="number" name="idFuncionario" class="form-control" id="inputIdFuncionario" placeholder="Informe o código" title="Digite o código único númerico" required="">
+                                    <input type="number" min="0" name="idFuncionario" class="form-control" id="inputIdFuncionario" placeholder="Informe o código" title="Digite o código único númerico" required="">
                                 </div>
                             </div>
                             <input type="hidden" name="idFormulario" value="4" />
