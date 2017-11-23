@@ -32,8 +32,9 @@
                             <h2 class="text-center">${mensagem}</h2>
                             <c:if test="${exemplar != null}">
                                 <h4 class="text-center"> CÓDIGO EXEMPLAR: ${exemplar.idexemplar}</h4>
+                                <h4 class="text-center"> DISPONÍVEL: ${exemplar.disponivel}</h4>
                                 <h4 class="text-center"> CÓDIGO LIVRO: ${exemplar.livro.idlivro}</h4>
-                                <h4 class="text-center"> TÍRTULO: ${exemplar.livro.titulo}</h4>
+                                <h4 class="text-center"> TÍTULO: ${exemplar.livro.titulo}</h4>
                                 <h4 class="text-center"> ISBN: ${exemplar.livro.isbn}</h4>
                                 <h4 class="text-center"> AUTOR: ${exemplar.livro.autor}</h4>
                                 <h4 class="text-center"> EDITORA ${exemplar.livro.editora}</h4>

@@ -55,8 +55,8 @@ public class Controlador extends HttpServlet {
        String nomeCliente , cpfCliente , telCliente, enderecoCliente, pendenciaCliente;
        int idCliente;
        
-       //Variáveis Livro
-       String tituloLivro, isbnLivro, autorLivro, editoraLivro, edicaoLivro, secaoLivro;
+       //Variáveis Livro e Exemplares
+       String tituloLivro, isbnLivro, autorLivro, editoraLivro, edicaoLivro, secaoLivro, DisponivelExemplar;
        int idLivro, qtdLivro, anoLivro , idExemplar;
        
        //Variáveis Funcionarios       
@@ -307,8 +307,9 @@ public class Controlador extends HttpServlet {
                             secaoLivro = livro.getSecao();
                             qtdLivro = livro.getQuantidade();
                             qtdLivro++;
+                            DisponivelExemplar = "Sim";
                             livro = new Livro(idLivro, tituloLivro, isbnLivro, editoraLivro, secaoLivro, anoLivro, autorLivro, secaoLivro, qtdLivro);
-                            Exemplar exemplar = new Exemplar(idExemplar, livro);
+                            Exemplar exemplar = new Exemplar(idExemplar, livro, DisponivelExemplar);
                         try {
                             tx.begin();
                             em.persist(exemplar);

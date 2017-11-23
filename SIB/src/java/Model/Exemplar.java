@@ -29,6 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Exemplar.findByIdexemplar", query = "SELECT e FROM Exemplar e WHERE e.idexemplar = :idexemplar")})
 public class Exemplar implements Serializable {
 
+    @Column(name = "disponivel")
+    private String disponivel;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -41,9 +44,10 @@ public class Exemplar implements Serializable {
     public Exemplar() {
     }
 
-    public Exemplar(Integer idexemplar, Livro livro) {
+    public Exemplar(Integer idexemplar, Livro livro, String disponivel) {
         this.idexemplar = idexemplar;
         this.livro = livro;
+        this.disponivel = disponivel;
     }
 
     public Integer getIdexemplar() {
@@ -85,6 +89,14 @@ public class Exemplar implements Serializable {
     @Override
     public String toString() {
         return "Model.Exemplar[ idexemplar=" + idexemplar + " ]";
+    }
+
+    public String getDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(String disponivel) {
+        this.disponivel = disponivel;
     }
     
 }

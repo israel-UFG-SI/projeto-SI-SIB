@@ -42,6 +42,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">CÓDIGO EXEMPLAR</th>
+                                                <th scope="col">DISPONÍVEL</th>
                                                 <th scope="col">CÓDIGO LIVRO</th>
                                                 <th scope="col">TÍTULO</th>
                                                 <th scope="col">ISBN</th>
@@ -58,6 +59,9 @@
                                                 <tr>
                                                     <td>
                                                         <c:out value="${row.idexemplar}" />
+                                                    </td>
+                                                    <td>
+                                                        <c:out value="${row.disponivel}" />
                                                     </td>
                                                     <td>
                                                         <c:out value="${row.livro.idlivro}" />
