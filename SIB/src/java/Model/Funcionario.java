@@ -63,10 +63,7 @@ public class Funcionario implements Serializable {
     @Basic(optional = false)
     @Column(name = "senha")
     private String senha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
-    private Collection<Emprestimo> emprestimoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
-    private Collection<Multa> multaCollection;
+   
 
     public Funcionario() {
     }
@@ -126,25 +123,7 @@ public class Funcionario implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    @XmlTransient
-    public Collection<Emprestimo> getEmprestimoCollection() {
-        return emprestimoCollection;
-    }
-
-    public void setEmprestimoCollection(Collection<Emprestimo> emprestimoCollection) {
-        this.emprestimoCollection = emprestimoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Multa> getMultaCollection() {
-        return multaCollection;
-    }
-
-    public void setMultaCollection(Collection<Multa> multaCollection) {
-        this.multaCollection = multaCollection;
-    }
+    }   
 
     @Override
     public int hashCode() {

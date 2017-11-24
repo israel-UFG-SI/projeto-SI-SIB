@@ -6,7 +6,9 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,8 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,6 +32,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Exemplar.findAll", query = "SELECT e FROM Exemplar e")
     , @NamedQuery(name = "Exemplar.findByIdexemplar", query = "SELECT e FROM Exemplar e WHERE e.idexemplar = :idexemplar")})
 public class Exemplar implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exemplar")
+    private Collection<Emprestimo> emprestimoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exemplar")
+    private Collection<Reserva> reservaCollection;
 
     @Column(name = "disponivel")
     private String disponivel;
@@ -97,6 +106,24 @@ public class Exemplar implements Serializable {
 
     public void setDisponivel(String disponivel) {
         this.disponivel = disponivel;
+    }
+
+    @XmlTransient
+    public Collection<Emprestimo> getEmprestimoCollection() {
+        return emprestimoCollection;
+    }
+
+    public void setEmprestimoCollection(Collection<Emprestimo> emprestimoCollection) {
+        this.emprestimoCollection = emprestimoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Reserva> getReservaCollection() {
+        return reservaCollection;
+    }
+
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
+        this.reservaCollection = reservaCollection;
     }
     
 }

@@ -45,10 +45,7 @@ public class Multa implements Serializable {
     @Basic(optional = false)
     @Column(name = "dataPagamento")
     @Temporal(TemporalType.DATE)
-    private Date dataPagamento;
-    @JoinColumn(name = "funcionario", referencedColumnName = "idfuncionario")
-    @ManyToOne(optional = false)
-    private Funcionario funcionario;
+    private Date dataPagamento;    
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Cliente usuario;
@@ -88,14 +85,6 @@ public class Multa implements Serializable {
 
     public void setDataPagamento(Date dataPagamento) {
         this.dataPagamento = dataPagamento;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
     }
 
     public Cliente getUsuario() {

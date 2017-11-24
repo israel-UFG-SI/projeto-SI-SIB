@@ -33,15 +33,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Reserva.findByDataReserva", query = "SELECT r FROM Reserva r WHERE r.dataReserva = :dataReserva")})
 public class Reserva implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "dataReserva")
+    private String dataReserva;
+    @JoinColumn(name = "exemplar", referencedColumnName = "idexemplar")
+    @ManyToOne(optional = false)
+    private Exemplar exemplar;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "idReserva")
     private Integer idReserva;
-    @Basic(optional = false)
-    @Column(name = "dataReserva")
-    @Temporal(TemporalType.DATE)
-    private Date dataReserva;
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Cliente usuario;
@@ -53,9 +56,10 @@ public class Reserva implements Serializable {
         this.idReserva = idReserva;
     }
 
-    public Reserva(Integer idReserva, Date dataReserva) {
+    public Reserva(Integer idReserva, String dataReserva , Cliente usuario) {
         this.idReserva = idReserva;
         this.dataReserva = dataReserva;
+        this.usuario = usuario;
     }
 
     public Integer getIdReserva() {
@@ -66,13 +70,6 @@ public class Reserva implements Serializable {
         this.idReserva = idReserva;
     }
 
-    public Date getDataReserva() {
-        return dataReserva;
-    }
-
-    public void setDataReserva(Date dataReserva) {
-        this.dataReserva = dataReserva;
-    }
 
     public Cliente getUsuario() {
         return usuario;
@@ -105,6 +102,22 @@ public class Reserva implements Serializable {
     @Override
     public String toString() {
         return "Model.Reserva[ idReserva=" + idReserva + " ]";
+    }
+
+    public String getDataReserva() {
+        return dataReserva;
+    }
+
+    public void setDataReserva(String dataReserva) {
+        this.dataReserva = dataReserva;
+    }
+
+    public Exemplar getExemplar() {
+        return exemplar;
+    }
+
+    public void setExemplar(Exemplar exemplar) {
+        this.exemplar = exemplar;
     }
     
 }

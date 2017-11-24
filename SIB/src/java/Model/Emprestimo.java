@@ -36,6 +36,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Emprestimo implements Serializable {
 
     @Basic(optional = false)
+    @Column(name = "dataEmprestimo")
+    private String dataEmprestimo;
+    @Basic(optional = false)
+    @Column(name = "dataDevProg")
+    private String dataDevProg;
+    @Column(name = "dataDevEfetiva")
+    private String dataDevEfetiva;
+    @JoinColumn(name = "exemplar", referencedColumnName = "idexemplar")
+    @ManyToOne(optional = false)
+    private Exemplar exemplar;
+
+    @Basic(optional = false)
     @Column(name = "situa\u00e7\u00e3o")
     private String situação;
 
@@ -44,20 +56,6 @@ public class Emprestimo implements Serializable {
     @Basic(optional = false)
     @Column(name = "idemprestimo")
     private Integer idemprestimo;
-    @Basic(optional = false)
-    @Column(name = "dataEmprestimo")
-    @Temporal(TemporalType.DATE)
-    private Date dataEmprestimo;
-    @Basic(optional = false)
-    @Column(name = "dataDevProg")
-    @Temporal(TemporalType.DATE)
-    private Date dataDevProg;
-    @Column(name = "dataDevEfetiva")
-    @Temporal(TemporalType.DATE)
-    private Date dataDevEfetiva;
-    @JoinColumn(name = "funcionario", referencedColumnName = "idfuncionario")
-    @ManyToOne(optional = false)
-    private Funcionario funcionario;
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Cliente usuario;
@@ -69,10 +67,13 @@ public class Emprestimo implements Serializable {
         this.idemprestimo = idemprestimo;
     }
 
-    public Emprestimo(Integer idemprestimo, Date dataEmprestimo, Date dataDevProg) {
+    public Emprestimo(Integer idemprestimo, String dataEmprestimo, String dataDevProg, String situação , Exemplar exemplar, Cliente usuario) {
         this.idemprestimo = idemprestimo;
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevProg = dataDevProg;
+        this.situação = situação;
+        this.exemplar = exemplar;
+        this.usuario = usuario;
     }
 
     public Integer getIdemprestimo() {
@@ -83,37 +84,6 @@ public class Emprestimo implements Serializable {
         this.idemprestimo = idemprestimo;
     }
 
-    public Date getDataEmprestimo() {
-        return dataEmprestimo;
-    }
-
-    public void setDataEmprestimo(Date dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
-    }
-
-    public Date getDataDevProg() {
-        return dataDevProg;
-    }
-
-    public void setDataDevProg(Date dataDevProg) {
-        this.dataDevProg = dataDevProg;
-    }
-
-    public Date getDataDevEfetiva() {
-        return dataDevEfetiva;
-    }
-
-    public void setDataDevEfetiva(Date dataDevEfetiva) {
-        this.dataDevEfetiva = dataDevEfetiva;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
 
     public Cliente getUsuario() {
         return usuario;
@@ -154,6 +124,38 @@ public class Emprestimo implements Serializable {
 
     public void setSituação(String situação) {
         this.situação = situação;
+    }
+
+    public String getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
+    public void setDataEmprestimo(String dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public String getDataDevProg() {
+        return dataDevProg;
+    }
+
+    public void setDataDevProg(String dataDevProg) {
+        this.dataDevProg = dataDevProg;
+    }
+
+    public String getDataDevEfetiva() {
+        return dataDevEfetiva;
+    }
+
+    public void setDataDevEfetiva(String dataDevEfetiva) {
+        this.dataDevEfetiva = dataDevEfetiva;
+    }
+
+    public Exemplar getExemplar() {
+        return exemplar;
+    }
+
+    public void setExemplar(Exemplar exemplar) {
+        this.exemplar = exemplar;
     }
     
 }

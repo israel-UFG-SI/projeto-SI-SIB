@@ -26,7 +26,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h3 class="tt_menu">&gt;&gt; LIVROS &lt;&lt;</h3>
+                        <h3 class="tt_menu">&gt;&gt; EMPRÉSTIMOS E RESERVAS &lt;&lt;</h3>
                         <div class="col-md-12  btn-group btn-group-lg btn-group-vertical">
                             <a href="emprestimos2/index.jsp" class="btn btn-default">Empréstimos</a>
                             <a href="multas/index.jsp" class="btn btn-default">Multas</a>
