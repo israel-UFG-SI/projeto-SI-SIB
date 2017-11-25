@@ -58,9 +58,9 @@ public class Controlador extends HttpServlet {
        String nomeFuncionario, cpfFuncionario, senhaFuncionario, enderecoFuncionario, telFuncionario;
        int idFuncionario, chFuncionario;
        
-       //Váriáveis Empréstimo
-       int idEmprestimo;
-       String dataDevProgramada, dataEmprestimo, dataDevEfetiva, situacao;
+       //Váriáveis Empréstimo E Reserva
+       int idEmprestimo, idReserva, temReserva=0;
+       String dataDevProgramada, dataEmprestimo, dataDevEfetiva, situacao, dataReserva = null;
        
        if (idFormulario == 1){ //Cliente
            switch (tipoFormulario){
@@ -472,7 +472,7 @@ public class Controlador extends HttpServlet {
                                             em.persist(emprestimo);
                                             em.merge(exemplar);
                                             tx.commit();
-                                            session.setAttribute("mensagem", "Empréstimo "+idExemplar+" cadastrado!"); 
+                                            session.setAttribute("mensagem", "Empréstimo "+idExemplar+" Aberto!"); 
                                             session.setAttribute("emprestimo", emprestimo);
                                         } catch (Exception e) {
                                             session.setAttribute("mensagem", "Código "+idEmprestimo+" já está sendo usado! Por favor, tente novamente com outro"); 
@@ -497,132 +497,155 @@ public class Controlador extends HttpServlet {
                         response.sendRedirect("View/emprestimos/emprestimos2/resultado.jsp");
                         break;
                     }
-                    case 44:{ // Alterar
-                        idFuncionario = Integer.parseInt(request.getParameter("idFuncionario"));
-                        senhaFuncionario = request.getParameter("senha");
-                        nomeFuncionario = request.getParameter("nome");
-                        chFuncionario = Integer.parseInt(request.getParameter("cargaHoraria"));
-                        enderecoFuncionario = request.getParameter("endereco");
-                        telFuncionario = request.getParameter("telefone");
-                        Funcionario funcionario = em.find(Funcionario.class, idFuncionario);  
-                        
-                        if(funcionario != null){// encontrado
-                            cpfFuncionario = funcionario.getCpf();                            
-                            funcionario = new Funcionario(idFuncionario, nomeFuncionario, cpfFuncionario, enderecoFuncionario, chFuncionario, telFuncionario, senhaFuncionario, idFormulario);
-                            tx.begin();
-                            em.merge(funcionario);
-                            tx.commit();                            
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" Alterado!"); 
-                            session.setAttribute("funcionario", funcionario);
+                    case 54:{ // Alterar
+                        idEmprestimo = Integer.parseInt(request.getParameter("idEmprestimo"));
+                        dataDevProgramada = request.getParameter("dataDev"); 
+                        temReserva = -1;
+                        Emprestimo emprestimo = em.find(Emprestimo.class, idEmprestimo);  
+                        if(emprestimo != null){// encontrado
+                            //IF VERIFICAÇÃO DA DATA VAI AQUI *********************************
+                            TypedQuery<Reserva> query = em.createQuery("" + "Select c from Reserva c", Reserva.class);
+                            List<Reserva> reservas = query.getResultList();
+                            for (Reserva aux: reservas){
+                                if (aux.getExemplar().getIdexemplar().equals(emprestimo.getExemplar().getIdexemplar())){
+                                    temReserva = 1;
+                                }
+                            }
+                            if (temReserva==-1){
+                                emprestimo.setDataDevProg(dataDevProgramada);
+                                tx.begin();
+                                em.merge(emprestimo);
+                                tx.commit();                            
+                                session.setAttribute("mensagem", "Emprestimo "+idEmprestimo+" Renovado!"); 
+                                session.setAttribute("emprestimo", emprestimo);
+                            }else{
+                                session.setAttribute("mensagem", "Não é possível renovar o empréstimo "+idEmprestimo+", pois há uma reserva em aberta para o exemplar!"); 
+                                session.setAttribute("emprestimo", null);
+                            }
+                            
                         }else{
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" não encontrado!"); 
-                            session.setAttribute("funcionario", null);
+                            session.setAttribute("mensagem", "Emprestimo "+idEmprestimo+" não encontrado!"); 
+                            session.setAttribute("emprestimo", null);
                         } 
-                        response.sendRedirect("View/funcionarios/resultado.jsp");
+                        response.sendRedirect("View/emprestimos/emprestimos2/resultado.jsp");
                         break;
                     }
-                    case 45:{ // Excluir
-                        idFuncionario = Integer.parseInt(request.getParameter("idFuncionario"));              
-                        Funcionario funcionario = em.find(Funcionario.class, idFuncionario);
-                        
-                        if(funcionario != null){// cliente encontrado
-                            tx.begin();
-                            em.remove(funcionario);
-                            tx.commit();
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" excluido!");                             
+                    case 55:{ // Excluir
+                        idEmprestimo = Integer.parseInt(request.getParameter("idEmprestimo"));
+                        dataDevEfetiva = request.getParameter("dataEfetiva");
+                        Emprestimo emprestimo = em.find(Emprestimo.class, idEmprestimo);
+                        if(emprestimo != null){// Empréstimo encontrado
+                            if (emprestimo.getSituação().equals("Aberto")){
+                                //VERIFICAÇÃO DA DATA VAI AQUI ***************************************
+                                /* SITUAÇÃO: BLOQUEADO*/
+                                emprestimo.setDataDevEfetiva(dataDevEfetiva);
+                                emprestimo.setSituação("Encerrado");
+                                Exemplar exemplar = emprestimo.getExemplar();
+                                exemplar.setDisponivel("Sim");
+                                tx.begin();
+                                em.merge(exemplar);
+                                em.merge(emprestimo);
+                                tx.commit();
+                                session.setAttribute("mensagem", "Emprestimo "+idEmprestimo+" encerrado!");  
+                            }else{
+                                session.setAttribute("mensagem", "Operação abortada! Emprestimo "+idEmprestimo+" não está mais aberto!");  
+                            }
                         }else{
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" não encontrado!");
+                            session.setAttribute("mensagem", "Emprestimo "+idEmprestimo+" não encontrado!");
                         } 
-                        session.setAttribute("funcionario", null);
-                        response.sendRedirect("View/funcionarios/resultado.jsp");
+                        session.setAttribute("emprestimo", null);
+                        response.sendRedirect("View/emprestimos/emprestimos2/resultado.jsp");
                         break;
                     }
            }
            
-       }else if (idFormulario == 6){ //Funcionário
+       }else if (idFormulario == 7){ //RESERVA
                 switch (tipoFormulario){
-                    case 41:{ //Consultar todos
-                        TypedQuery<Funcionario> query = em.createQuery("" + "Select c from Funcionario c", Funcionario.class);
-                        List<Funcionario> funcionarios = query.getResultList();
-                        session.setAttribute("mensagem", "Total de Funcionário(s): "+funcionarios.size() ); 
-                        session.setAttribute("funcionarios", funcionarios); 
-                        response.sendRedirect("View/funcionarios/consultaTodos.jsp");
+                    case 71:{ //Consultar todos
+                        TypedQuery<Reserva> query = em.createQuery("" + "Select c from Reserva c", Reserva.class);
+                        List<Reserva> reservas = query.getResultList();
+                        session.setAttribute("mensagem", "Total de Reserva(s): "+reservas.size() ); 
+                        session.setAttribute("reservas", reservas); 
+                        response.sendRedirect("View/emprestimos/reservas/consultaTodos.jsp");
                         break;
                     }
-                    case 42:{ //Consultar Especifico
-                        idFuncionario = Integer.parseInt(request.getParameter("idFuncionario"));
-                        Funcionario funcionario = em.find(Funcionario.class, idFuncionario);  
+                    case 72:{ //Consultar Especifico
+                        idReserva = Integer.parseInt(request.getParameter("idReserva"));
+                        Reserva reserva = em.find(Reserva.class, idReserva);  
                         
-                        if(funcionario != null){// cliente encontrado
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" encontrado!"); 
-                            session.setAttribute("funcionario", funcionario);
+                        if(reserva != null){// reserva encontrada
+                            session.setAttribute("mensagem", "Reserva "+idReserva+" encontrada!"); 
+                            session.setAttribute("reserva", reserva);
                         }else{
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" não encontrado!"); 
-                            session.setAttribute("funcionario", null);
+                            session.setAttribute("mensagem", "Reserva "+idReserva+" não encontrada!"); 
+                            session.setAttribute("reserva", null);
                         } 
-                        response.sendRedirect("View/funcionarios/resultado.jsp");
+                        response.sendRedirect("View/emprestimos/reservas/resultado.jsp");
                         break;
                     }
-                    case 43:{ // Cadastrar
-                        idFuncionario = Integer.parseInt(request.getParameter("idFuncionario"));
-                        senhaFuncionario = request.getParameter("senha");
-                        nomeFuncionario = request.getParameter("nome");
-                        cpfFuncionario = request.getParameter("cpf");
-                        chFuncionario = Integer.parseInt(request.getParameter("cargaHoraria"));
-                        enderecoFuncionario = request.getParameter("endereco");
-                        telFuncionario = request.getParameter("telefone");
-                        Funcionario funcionario = new Funcionario(idFuncionario, nomeFuncionario, cpfFuncionario, enderecoFuncionario, chFuncionario, telFuncionario, senhaFuncionario, idFormulario);
-                        try {
+                    case 73:{ // Cadastrar
+                        idReserva = Integer.parseInt(request.getParameter("idReserva"));
+                        idExemplar = Integer.parseInt(request.getParameter("idExemplar"));
+                        idCliente = Integer.parseInt(request.getParameter("idCliente"));
+                        
+                        Exemplar exemplar = em.find(Exemplar.class, idExemplar); 
+                       if( exemplar != null){ // Exemplar Existe
+                           if (exemplar.getDisponivel().equals("Não")){
+                                Cliente cliente = em.find(Cliente.class, idCliente);
+                                if (cliente != null){ // Cliente Existe
+                                    if(cliente.getPendencia().equals("Não")){
+                                        TypedQuery<Emprestimo> query = em.createQuery("" + "Select c from Emprestimo c", Emprestimo.class);
+                                        List<Emprestimo> emprestimos = query.getResultList();
+                                        for (Emprestimo aux: emprestimos){
+                                            if (aux.getExemplar().getIdexemplar().equals(exemplar.getIdexemplar())){
+                                            dataReserva= aux.getDataDevProg();                                            
+                                            }
+                                        }  
+                                        Reserva reserva = new Reserva(idReserva, dataReserva, cliente, exemplar);
+                                        try {
+                                            tx.begin();
+                                            em.persist(reserva);
+                                            tx.commit();
+                                                session.setAttribute("mensagem", "Reserva "+idReserva+" Aberta!"); 
+                                            session.setAttribute("reserva", reserva);
+                                        } catch (Exception e) {
+                                            session.setAttribute("mensagem", "Código "+idReserva+" já está sendo usado! Por favor, tente novamente com outro"); 
+                                            session.setAttribute("reserva", null);
+                                        }
+                                    }else{
+                                        session.setAttribute("mensagem", "Reserva cancelada! Código do Cliente "+idCliente+" possui pendência! Por favor verifique na seção de multas"); 
+                                        session.setAttribute("reserva", null);
+                                    }                                    
+                                }else{
+                                    session.setAttribute("mensagem", "Código do Cliente "+idCliente+" não encontrado! Verifique se está correto e tente novamente"); 
+                                    session.setAttribute("reserva", null);
+                                }
+                            }else{
+                                session.setAttribute("mensagem", "Código do Exemplar "+idExemplar+" está disponível não é preciso realizar reserva"); 
+                                session.setAttribute("reserva", null);
+                           }                                                    
+                        }else{
+                            session.setAttribute("mensagem", "Código do Exemplar "+idExemplar+" não encontrado! Verifique se está correto e tente novamente"); 
+                            session.setAttribute("reserva", null);
+                        }
+                                                                         
+                        response.sendRedirect("View/emprestimos/reservas/resultado.jsp");
+                        break;
+                    }                    
+                    case 75:{ // Excluir
+                        idReserva = Integer.parseInt(request.getParameter("idReserva"));
+                        Reserva reserva = em.find(Reserva.class, idReserva);
+                        
+                        if(reserva != null){// reserva encontrado
                             tx.begin();
-                            em.persist(funcionario);
+                            em.remove(reserva);
                             tx.commit();
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" cadastrado!"); 
-                            session.setAttribute("funcionario", funcionario);
-                        } catch (Exception e) {
-                            session.setAttribute("mensagem", "Código "+idFuncionario+" já está sendo usado! Por favor, tente novamente com outro"); 
-                            session.setAttribute("funcionario", null);
-                        }                                                 
-                        response.sendRedirect("View/funcionarios/resultado.jsp");
-                        break;
-                    }
-                    case 44:{ // Alterar
-                        idFuncionario = Integer.parseInt(request.getParameter("idFuncionario"));
-                        senhaFuncionario = request.getParameter("senha");
-                        nomeFuncionario = request.getParameter("nome");
-                        chFuncionario = Integer.parseInt(request.getParameter("cargaHoraria"));
-                        enderecoFuncionario = request.getParameter("endereco");
-                        telFuncionario = request.getParameter("telefone");
-                        Funcionario funcionario = em.find(Funcionario.class, idFuncionario);  
-                        
-                        if(funcionario != null){// encontrado
-                            cpfFuncionario = funcionario.getCpf();                            
-                            funcionario = new Funcionario(idFuncionario, nomeFuncionario, cpfFuncionario, enderecoFuncionario, chFuncionario, telFuncionario, senhaFuncionario, idFormulario);
-                            tx.begin();
-                            em.merge(funcionario);
-                            tx.commit();                            
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" Alterado!"); 
-                            session.setAttribute("funcionario", funcionario);
+                            session.setAttribute("mensagem", "Reserva "+idReserva+" encerrada!");                             
                         }else{
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" não encontrado!"); 
-                            session.setAttribute("funcionario", null);
+                            session.setAttribute("mensagem", "Reserva "+idReserva+" não encontrada!");
                         } 
-                        response.sendRedirect("View/funcionarios/resultado.jsp");
-                        break;
-                    }
-                    case 45:{ // Excluir
-                        idFuncionario = Integer.parseInt(request.getParameter("idFuncionario"));              
-                        Funcionario funcionario = em.find(Funcionario.class, idFuncionario);
-                        
-                        if(funcionario != null){// cliente encontrado
-                            tx.begin();
-                            em.remove(funcionario);
-                            tx.commit();
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" excluido!");                             
-                        }else{
-                            session.setAttribute("mensagem", "Funcionário "+idFuncionario+" não encontrado!");
-                        } 
-                        session.setAttribute("funcionario", null);
-                        response.sendRedirect("View/funcionarios/resultado.jsp");
+                        session.setAttribute("reserva", null);
+                        response.sendRedirect("View/emprestimos/reservas/resultado.jsp");
                         break;
                     }
            }

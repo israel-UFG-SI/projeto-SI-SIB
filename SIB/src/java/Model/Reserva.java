@@ -56,10 +56,11 @@ public class Reserva implements Serializable {
         this.idReserva = idReserva;
     }
 
-    public Reserva(Integer idReserva, String dataReserva , Cliente usuario) {
+    public Reserva(Integer idReserva, String dataReserva , Cliente usuario, Exemplar exemplar) {
         this.idReserva = idReserva;
         this.dataReserva = dataReserva;
         this.usuario = usuario;
+        this.exemplar = exemplar;
     }
 
     public Integer getIdReserva() {

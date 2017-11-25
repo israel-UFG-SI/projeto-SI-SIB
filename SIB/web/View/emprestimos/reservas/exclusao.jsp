@@ -7,8 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" src="../../../lib/js/jquery.min.js"></script>
         <script type="text/javascript" src="../../../lib/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../../../lib/js/jquery.mask.js"></script>
-        <script type="text/javascript" src="../../../lib/js/jquery.mask.min.js"></script>
         <link href="../../../lib/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../../../lib/css/bootstrap.css" rel="stylesheet" type="text/css">
         <link href="../../../lib/css/padrao.css" rel="stylesheet" type="text/css">
@@ -28,33 +26,20 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h3 class="tt_menu">&gt;&gt; EMPRÉSTIMOS - ENCERRAR UM EMPRÉSTIMO &lt;&lt;</h3>
+                        <h3 class="tt_menu">&gt;&gt; RESERVAS - ENCERRAR RESERVA &lt;&lt;</h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <form class="form-horizontal" role="form" action="http://localhost/SIB/Controlador" method="post">
-                            <div class="form-group">
-                                <div class="col-sm-2">
-                                    <label for="inputIdEmprestimo" class="control-label">Informar o Código Empréstimo:</label>
-                                </div>
-                                <div class="col-sm-10">
-                                    <input type="number" name="idEmprestimo" class="form-control" id="inputIdEmprestimo" min="0" placeholder="Informe o código do empréstimo" title="Digite o código único númerico" required="">
-                                </div>
+                            <div class="col-sm-2">
+                                <label for="inputIdReserva" class="control-label">Informar o Código Reserva:</label>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-2">
-                                    <label for="inputDataEfetiva" class="control-label">Informar Data da Devolução:</label>
-                                </div>
-                                <div class="col-sm-10">
-                                    <input type="text" name="dataEfetiva" class="form-control" minlength="10" id="inputDataEfetiva" placeholder="Data de hoje" required>
-                                </div>
-                                <script>
-                                    $("#inputDataEfetiva").mask("00/00/0000");
-                                </script>
+                            <div class="col-sm-10">
+                                <input type="number" min="0" name="idReserva" class="form-control" id="inputIdReserva" placeholder="Informe o código" title="Digite o código único númerico" required="">
                             </div>
-                            <input type="hidden" name="idFormulario" value="5" />
-                            <input type="hidden" name="tipoFormulario" value="55" />
+                            <input type="hidden" name="idFormulario" value="7" />
+                            <input type="hidden" name="tipoFormulario" value="75" />
                             <div class="col-md-12 text-center">
                                 <button type="submit" class="btn btn-danger">Encerrar</button>
                             </div>

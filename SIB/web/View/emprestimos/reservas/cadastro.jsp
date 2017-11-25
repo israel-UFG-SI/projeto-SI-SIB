@@ -28,44 +28,49 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h3 class="tt_menu">&gt;&gt; EMPRÉSTIMOS - ENCERRAR UM EMPRÉSTIMO &lt;&lt;</h3>
+                        <h3 class="tt_menu">&gt;&gt; RESERVAS - CRIAR UMA NOVA RESERVA &lt;&lt;</h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <form class="form-horizontal" role="form" action="http://localhost/SIB/Controlador" method="post">
                             <div class="form-group">
-                                <div class="col-sm-2">
-                                    <label for="inputIdEmprestimo" class="control-label">Informar o Código Empréstimo:</label>
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <label for="inputIdReserva" class="control-label">Informar o Código Reserva:</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="number" min="0" name="idReserva" class="form-control" id="inputIdReserva" placeholder="Informe o código" title="Digite o código único númerico" required="">
+                                    </div>
                                 </div>
-                                <div class="col-sm-10">
-                                    <input type="number" name="idEmprestimo" class="form-control" id="inputIdEmprestimo" min="0" placeholder="Informe o código do empréstimo" title="Digite o código único númerico" required="">
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <label for="inputIdCliente" class="control-label">Informar o Código Cliente:</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="number" min="0" name="idCliente" class="form-control" id="inputIdCliente" placeholder="Informe o código" title="Digite o código único númerico" required="">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-2">
-                                    <label for="inputDataEfetiva" class="control-label">Informar Data da Devolução:</label>
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <label for="inputIdExemplar" class="control-label">Informar o Código Exemplar:</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="number" min="0" name="idExemplar" class="form-control" id="InputIdExemplar" placeholder="Informe o código" title="Digite o código único númerico" required="">
+                                    </div>
                                 </div>
-                                <div class="col-sm-10">
-                                    <input type="text" name="dataEfetiva" class="form-control" minlength="10" id="inputDataEfetiva" placeholder="Data de hoje" required>
+                                <input type="hidden" name="idFormulario" value="7" />
+                                <input type="hidden" name="tipoFormulario" value="73" />
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-danger">Criar</button>
                                 </div>
-                                <script>
-                                    $("#inputDataEfetiva").mask("00/00/0000");
-                                </script>
-                            </div>
-                            <input type="hidden" name="idFormulario" value="5" />
-                            <input type="hidden" name="tipoFormulario" value="55" />
-                            <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-danger">Encerrar</button>
                             </div>
                     </div>
+                    </form>
                 </div>
-                </form>
             </div>
         </div>
         </div>
-        </div>
-
         <div class="section">
             <div class="container">
                 <div class="row">
@@ -75,7 +80,6 @@
                 </div>
             </div>
         </div>
-
         <footer>
             <div class="navbar navbar-fixed-bottom bgred">
                 <div class="container">
