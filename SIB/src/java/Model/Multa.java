@@ -6,7 +6,6 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -34,6 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Multa.findByDataPagamento", query = "SELECT m FROM Multa m WHERE m.dataPagamento = :dataPagamento")})
 public class Multa implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "dataPagamento")
+    private String dataPagamento;
+    @Basic(optional = false)
+    @Column(name = "situacao")
+    private String situacao;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -42,10 +46,6 @@ public class Multa implements Serializable {
     @Basic(optional = false)
     @Column(name = "valor")
     private float valor;
-    @Basic(optional = false)
-    @Column(name = "dataPagamento")
-    @Temporal(TemporalType.DATE)
-    private Date dataPagamento;    
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Cliente usuario;
@@ -57,10 +57,11 @@ public class Multa implements Serializable {
         this.idmulta = idmulta;
     }
 
-    public Multa(Integer idmulta, float valor, Date dataPagamento) {
+    public Multa(Integer idmulta, float valor, String situacao, Cliente usuario) {
         this.idmulta = idmulta;
         this.valor = valor;
-        this.dataPagamento = dataPagamento;
+        this.situacao = situacao;
+        this.usuario = usuario;
     }
 
     public Integer getIdmulta() {
@@ -79,13 +80,6 @@ public class Multa implements Serializable {
         this.valor = valor;
     }
 
-    public Date getDataPagamento() {
-        return dataPagamento;
-    }
-
-    public void setDataPagamento(Date dataPagamento) {
-        this.dataPagamento = dataPagamento;
-    }
 
     public Cliente getUsuario() {
         return usuario;
@@ -118,6 +112,22 @@ public class Multa implements Serializable {
     @Override
     public String toString() {
         return "Model.Multa[ idmulta=" + idmulta + " ]";
+    }
+
+    public String getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(String dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
     }
     
 }

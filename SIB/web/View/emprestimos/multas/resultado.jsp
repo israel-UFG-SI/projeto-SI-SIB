@@ -30,16 +30,13 @@
                     <div class="row text-center">
                         <div class="col-md-12 text-center">
                             <h2 class="text-center">${mensagem}</h2>
-                            <c:if test="${emprestimo != null}">
-                                <h4 class="text-center"> CÓDIGO EMPRÉSTIMO: ${emprestimo.idemprestimo}</h4>
-                                <h4 class="text-center"> CÓDIGO CLIENTE: ${emprestimo.usuario.idusuario} </h4>
-                                <h4 class="text-center"> NOME CLIENTE: ${emprestimo.usuario.nome}</h4>
-                                <h4 class="text-center"> CÓDIGO EXEMPLAR: ${emprestimo.exemplar.idexemplar}</h4>
-                                <h4 class="text-center"> TÍTULO LIVRO: ${emprestimo.exemplar.livro.titulo}</h4>
-                                <h4 class="text-center"> DATA DO EMPRÉSTIMO: ${emprestimo.dataEmprestimo}</h4>
-                                <h4 class="text-center"> DATA PARA DEVOLUÇÃO: ${emprestimo.dataDevProg}</h4>
-                                <h4 class="text-center"> DATA EFETIVA DEVOLUÇÃO: ${emprestimo.dataDevEfetiva}</h4>
-                                <h4 class="text-center"> SITUAÇÃO: ${emprestimo.situação}</h4>
+                            <c:if test="${multa != null}">
+                                <h4 class="text-center"> CÓDIGO DA MULTA: ${multa.idmulta}</h4>
+                                <h4 class="text-center"> CÓDIGO CLIENTE: ${multa.usuario.idusuario} </h4>
+                                <h4 class="text-center"> NOME CLIENTE: ${multa.usuario.nome}</h4>
+                                <h4 class="text-center"> VALOR(R$): ${multa.valor}</h4>
+                                <h4 class="text-center"> SITUAÇÃO: ${multa.situacao}</h4>
+                                <h4 class="text-center"> DATA DO PAGAMENTO: ${multa.dataPagamento}</h4>
                             </c:if>
                         </div>
                     </div>
@@ -50,7 +47,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <a class="btn btn-default" href="index.jsp">Retornar ao Menu Consulta</a>
+                            <a class="btn btn-default" href="index.jsp">Retornar ao Menu Multas</a>
                         </div>
                     </div>
                 </div>

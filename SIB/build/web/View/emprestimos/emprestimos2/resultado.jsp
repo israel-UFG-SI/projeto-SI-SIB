@@ -50,7 +50,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <a class="btn btn-default" href="index.jsp">Retornar ao Menu Empréstimos</a>
+                            <a class="btn btn-default" href="index.jsp">Retornar ao Menu Consulta</a>
                         </div>
                     </div>
                 </div>

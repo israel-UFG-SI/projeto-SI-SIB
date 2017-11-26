@@ -59,8 +59,11 @@ public class Controlador extends HttpServlet {
        int idFuncionario, chFuncionario;
        
        //Váriáveis Empréstimo E Reserva
-       int idEmprestimo, idReserva, temReserva=0;
-       String dataDevProgramada, dataEmprestimo, dataDevEfetiva, situacao, dataReserva = null;
+       int idEmprestimo, idReserva, temReserva=0, idMulta;
+       String dataDevProgramada, dataEmprestimo, dataDevEfetiva, situacao, dataReserva = null , situacaoMulta , dataPagamento;
+       float valorMulta;
+       
+    
        
        if (idFormulario == 1){ //Cliente
            switch (tipoFormulario){
@@ -559,7 +562,161 @@ public class Controlador extends HttpServlet {
                     }
            }
            
-       }else if (idFormulario == 7){ //RESERVA
+       } else if (idFormulario == 6){ //Multa
+           switch (tipoFormulario){
+                    case 61:{ //Consultar todos
+                        TypedQuery<Multa> query = em.createQuery("" + "Select c from Multa c", Multa.class);
+                        List<Multa> multas = query.getResultList();
+                        session.setAttribute("mensagem", "Total de Multa(s): "+multas.size() ); 
+                        session.setAttribute("multas", multas); 
+                        response.sendRedirect("View/emprestimos/multas/ConsultaTodos/consultaTodos.jsp");
+                        break;
+                    }
+                    case 66:{ //Consultar todos Aberto
+                        TypedQuery<Multa> query = em.createQuery("" + "Select c from Multa c", Multa.class);
+                        List<Multa> preMultas = query.getResultList();
+                        List<Multa> multas = new ArrayList();                       
+                        if(preMultas != null){                          
+                            for (Multa aux: preMultas){
+                                if(aux.getSituacao().equals("Aberta")){
+                                        multas.add(aux);
+                                    }                                
+                                }                            
+                            session.setAttribute("mensagem", "Total de Multa(s) em Aberto: "+multas.size() ); 
+                            session.setAttribute("multas", multas);
+                        }else{
+                            session.setAttribute("mensagem", "Nenhuma multa em aberto localizado!"); 
+                            session.setAttribute("multa", null);
+                        }
+                        response.sendRedirect("View/emprestimos/multas/ConsultaTodos/consultaTodos.jsp");
+                        break;
+                    }
+                    case 67:{ //Consultar todos Pagas
+                        TypedQuery<Multa> query = em.createQuery("" + "Select c from Multa c", Multa.class);
+                        List<Multa> preMultas = query.getResultList();
+                        List<Multa> multas = new ArrayList();                       
+                        if(preMultas != null){                          
+                            for (Multa aux: preMultas){
+                                if(aux.getSituacao().equals("Paga")){
+                                        multas.add(aux);
+                                    }                                
+                                }                            
+                            session.setAttribute("mensagem", "Total de Multa(s) Paga(s): "+multas.size() ); 
+                            session.setAttribute("multas", multas);
+                        }else{
+                            session.setAttribute("mensagem", "Nenhuma multa paga localizada!"); 
+                            session.setAttribute("multa", null);
+                        }
+                        response.sendRedirect("View/emprestimos/multas/ConsultaTodos/consultaTodos.jsp");
+                        break;
+                    }
+                    case 62:{ //Consultar Especifico
+                        idCliente = Integer.parseInt(request.getParameter("idUsuario"));
+                        TypedQuery<Multa> query = em.createQuery("" + "Select c from Multa c", Multa.class);
+                        List<Multa> preMultas = query.getResultList();
+                        List<Multa> multas = new ArrayList();                       
+                        if(preMultas != null){                          
+                            for (Multa aux: preMultas){
+                                if(aux.getUsuario().getIdusuario().equals(idCliente)){
+                                        multas.add(aux);
+                                    }                                
+                                }                            
+                            session.setAttribute("mensagem", "Total de Multa(s) do Cliente: "+multas.size() ); 
+                            session.setAttribute("multas", multas);
+                        }else{
+                            session.setAttribute("mensagem", "Nenhuma multa do Cliente "+idCliente+" localizada!"); 
+                            session.setAttribute("multa", null);
+                        }                       
+                        response.sendRedirect("View/emprestimos/multas/consulta/consultaTodos.jsp");
+                        break;
+                    }
+                    case 68:{ //Consultar Especifico
+                        idMulta = Integer.parseInt(request.getParameter("idEmprestimo"));                    
+                        Multa multa = em.find(Multa.class, idMulta);  
+                        
+                        if(multa != null){// Multa encontrado
+                            session.setAttribute("mensagem", "Multa "+idMulta+" encontrada!"); 
+                            session.setAttribute("multa", multa);
+                        }else{
+                            session.setAttribute("mensagem", "Multa "+idMulta+" não encontrada!"); 
+                            session.setAttribute("multa", null);
+                        } 
+                        response.sendRedirect("View/emprestimos/multas/consulta/resultado.jsp");
+                        break;
+                    }
+                    case 63:{ // Cadastrar
+                        /*idEmprestimo = Integer.parseInt(request.getParameter("idEmprestimo"));
+                        idExemplar = Integer.parseInt(request.getParameter("idExemplar"));
+                        idCliente = Integer.parseInt(request.getParameter("idCliente"));
+                        dataEmprestimo = request.getParameter("DataEmprestimo");
+                        dataDevProgramada = request.getParameter("dataDev");
+                        situacao = "Aberto";                       
+                        
+                        Exemplar exemplar = em.find(Exemplar.class, idExemplar); 
+                       if( exemplar != null){ // Exemplar Existe
+                           if (exemplar.getDisponivel().equals("Sim")){
+                                Cliente cliente = em.find(Cliente.class, idCliente);
+                                if (cliente != null){ // Cliente Existe
+                                    if(cliente.getPendencia().equals("Não")){
+                                        Emprestimo emprestimo = new Emprestimo(idEmprestimo, dataEmprestimo, dataDevProgramada, situacao, exemplar, cliente);
+                                        exemplar.setDisponivel("Não");
+                                        try {
+                                            tx.begin();
+                                            em.persist(emprestimo);
+                                            em.merge(exemplar);
+                                            tx.commit();
+                                            session.setAttribute("mensagem", "Empréstimo "+idExemplar+" Aberto!"); 
+                                            session.setAttribute("emprestimo", emprestimo);
+                                        } catch (Exception e) {
+                                            session.setAttribute("mensagem", "Código "+idEmprestimo+" já está sendo usado! Por favor, tente novamente com outro"); 
+                                            session.setAttribute("emprestimo", null);
+                                        }
+                                    }else{
+                                        session.setAttribute("mensagem", "Empréstimo cancelado! Código do Cliente "+idCliente+" possui pendência! Por favor verifique na seção de multas"); 
+                                        session.setAttribute("emprestimo", null);
+                                    }                                    
+                                }else{
+                                    session.setAttribute("mensagem", "Código do Cliente "+idCliente+" não encontrado! Verifique se está correto e tente novamente"); 
+                                    session.setAttribute("emprestimo", null);
+                                }
+                            }else{
+                                session.setAttribute("mensagem", "Código do Exemplar "+idExemplar+" não está disponivel para empréstimo! Verifique a disponibildiade e tente novamente ou realize uma reserva."); 
+                                session.setAttribute("emprestimo", null);
+                           }                                                    
+                        }else{
+                            session.setAttribute("mensagem", "Código do Exemplar "+idExemplar+" não encontrado! Verifique se está correto e tente novamente"); 
+                            session.setAttribute("emprestimo", null);
+                        }                         
+                        response.sendRedirect("View/emprestimos/emprestimos2/resultado.jsp");
+                        break;*/
+                    }                    
+                    case 65:{ // Excluir
+                        idMulta = Integer.parseInt(request.getParameter("idEmprestimo"));
+                        dataPagamento = request.getParameter("dataPagamento");
+                        Multa multa = em.find(Multa.class, idMulta);
+                        if(multa != null){// Multa encontrado
+                            if (multa.getSituacao().equals("Aberta")){ 
+                                Cliente cliente = multa.getUsuario();
+                                cliente.setPendencia("Não");
+                                multa.setDataPagamento(dataPagamento);
+                                multa.setSituacao("Paga");
+                                tx.begin();
+                                em.merge(multa);
+                                em.merge(cliente);
+                                tx.commit();
+                                session.setAttribute("mensagem", "Baixa dada para Multa "+idMulta+"!");  
+                            }else{
+                                session.setAttribute("mensagem", "Operação abortada! Multa "+idMulta+" já está paga!");  
+                            }
+                        }else{
+                            session.setAttribute("mensagem", "Multa "+idMulta+" não encontrada!");
+                        } 
+                        session.setAttribute("multa", null);
+                        response.sendRedirect("View/emprestimos/multas/resultado.jsp");
+                        break;
+                    }
+                }
+            }else if (idFormulario == 7){ //RESERVA
                 switch (tipoFormulario){
                     case 71:{ //Consultar todos
                         TypedQuery<Reserva> query = em.createQuery("" + "Select c from Reserva c", Reserva.class);
