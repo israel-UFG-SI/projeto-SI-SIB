@@ -33,7 +33,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form class="form-horizontal" role="form" action="http://localhost/SIB/Controlador" method="post">
+                        <form class="form-horizontal" role="form" action="http://localhost/SIB/ControladorLivro" method="post">
                             <input type="hidden" name="idFormulario" value="3" />
                             <input type="hidden" name="tipoFormulario" value="31" />
                             <div class="col-md-12 text-center">

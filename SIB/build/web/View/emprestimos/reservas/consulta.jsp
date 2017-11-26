@@ -31,7 +31,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form class="form-horizontal" role="form" action="http://localhost/SIB/Controlador" method="post">
+                        <form class="form-horizontal" role="form" action="http://localhost/SIB/ControladorEmprestimo" method="post">
                             <div class="col-sm-2">
                                 <label for="inputIdReserva" class="control-label">Informar o Código Reserva:</label>
                             </div>
