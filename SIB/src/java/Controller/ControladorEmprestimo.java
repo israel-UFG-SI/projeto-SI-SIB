@@ -172,6 +172,7 @@ public class ControladorEmprestimo extends HttpServlet {
                         temReserva = -1;
                         Emprestimo emprestimo = em.find(Emprestimo.class, idEmprestimo);  
                         if(emprestimo != null){// encontrado
+                            if (emprestimo.getSituação().equals("Aberto")){
                             //IF VERIFICAÇÃO DA DATA VAI AQUI *********************************
                             TypedQuery<Reserva> query = em.createQuery("" + "Select c from Reserva c", Reserva.class);
                             List<Reserva> reservas = query.getResultList();
@@ -191,7 +192,10 @@ public class ControladorEmprestimo extends HttpServlet {
                                 session.setAttribute("mensagem", "Não é possível renovar o empréstimo "+idEmprestimo+", pois há uma reserva em aberta para o exemplar!"); 
                                 session.setAttribute("emprestimo", null);
                             }
-                            
+                            }else{
+                                session.setAttribute("mensagem", "Operação abortada! Emprestimo "+idEmprestimo+" não está mais aberto!");  
+                                session.setAttribute("emprestimo", null);
+                        }
                         }else{
                             session.setAttribute("mensagem", "Emprestimo "+idEmprestimo+" não encontrado!"); 
                             session.setAttribute("emprestimo", null);
@@ -310,51 +314,11 @@ public class ControladorEmprestimo extends HttpServlet {
                         response.sendRedirect("View/emprestimos/multas/consulta/resultado.jsp");
                         break;
                     }
-                    case 63:{ // Cadastrar
-                        /*idEmprestimo = Integer.parseInt(request.getParameter("idEmprestimo"));
-                        idExemplar = Integer.parseInt(request.getParameter("idExemplar"));
-                        idCliente = Integer.parseInt(request.getParameter("idCliente"));
-                        dataEmprestimo = request.getParameter("DataEmprestimo");
-                        dataDevProgramada = request.getParameter("dataDev");
-                        situacao = "Aberto";                       
-                        
-                        Exemplar exemplar = em.find(Exemplar.class, idExemplar); 
-                       if( exemplar != null){ // Exemplar Existe
-                           if (exemplar.getDisponivel().equals("Sim")){
-                                Cliente cliente = em.find(Cliente.class, idCliente);
-                                if (cliente != null){ // Cliente Existe
-                                    if(cliente.getPendencia().equals("Não")){
-                                        Emprestimo emprestimo = new Emprestimo(idEmprestimo, dataEmprestimo, dataDevProgramada, situacao, exemplar, cliente);
-                                        exemplar.setDisponivel("Não");
-                                        try {
-                                            tx.begin();
-                                            em.persist(emprestimo);
-                                            em.merge(exemplar);
-                                            tx.commit();
-                                            session.setAttribute("mensagem", "Empréstimo "+idExemplar+" Aberto!"); 
-                                            session.setAttribute("emprestimo", emprestimo);
-                                        } catch (Exception e) {
-                                            session.setAttribute("mensagem", "Código "+idEmprestimo+" já está sendo usado! Por favor, tente novamente com outro"); 
-                                            session.setAttribute("emprestimo", null);
-                                        }
-                                    }else{
-                                        session.setAttribute("mensagem", "Empréstimo cancelado! Código do Cliente "+idCliente+" possui pendência! Por favor verifique na seção de multas"); 
-                                        session.setAttribute("emprestimo", null);
-                                    }                                    
-                                }else{
-                                    session.setAttribute("mensagem", "Código do Cliente "+idCliente+" não encontrado! Verifique se está correto e tente novamente"); 
-                                    session.setAttribute("emprestimo", null);
-                                }
-                            }else{
-                                session.setAttribute("mensagem", "Código do Exemplar "+idExemplar+" não está disponivel para empréstimo! Verifique a disponibildiade e tente novamente ou realize uma reserva."); 
-                                session.setAttribute("emprestimo", null);
-                           }                                                    
-                        }else{
-                            session.setAttribute("mensagem", "Código do Exemplar "+idExemplar+" não encontrado! Verifique se está correto e tente novamente"); 
-                            session.setAttribute("emprestimo", null);
-                        }                         
-                        response.sendRedirect("View/emprestimos/emprestimos2/resultado.jsp");
-                        break;*/
+                    case 63:{ // Cadastrar                        
+                         session.setAttribute("mensagem", "Operação Não Implementada"); 
+                         session.setAttribute("emprestimo", null);
+                        response.sendRedirect("View/emprestimos/multas/resultado.jsp");
+                        break;
                     }                    
                     case 65:{ // Excluir
                         idMulta = Integer.parseInt(request.getParameter("idEmprestimo"));
